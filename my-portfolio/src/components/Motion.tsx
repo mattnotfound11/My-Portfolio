@@ -41,23 +41,46 @@ export function useInView<T extends HTMLElement>(threshold = 0.25) {
 /* ── Thin progress bar tracking page scroll ─────────────── */
 
 export function ScrollProgress() {
-  const [pct, setPct] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      setPct(h > 0 ? (window.scrollY / h) * 100 : 0);
+    const el = ref.current;
+    if (!el) return;
+
+    // scrollHeight forces layout, so measure it on resize instead of per frame.
+    let limit = 0;
+    const measure = () => {
+      limit = document.documentElement.scrollHeight - window.innerHeight;
     };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    measure();
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+    window.addEventListener('resize', measure);
+
+    // Drive from rAF rather than scroll events: Lenis eases scrollY every
+    // frame, so listening to discrete scroll events lags behind the motion.
+    let raf = 0;
+    let last = -1;
+    const tick = () => {
+      const p = limit > 0 ? Math.min(Math.max(window.scrollY / limit, 0), 1) : 0;
+      if (Math.abs(p - last) > 0.0004) {
+        // scaleX composites on the GPU; animating width would relayout.
+        el.style.transform = `scaleX(${p})`;
+        last = p;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
     };
   }, []);
 
-  return <div className="scroll-progress" style={{ width: `${pct}%` }} />;
+  return <div className="scroll-progress" ref={ref} />;
 }
 
 /* ── Number that counts up when scrolled into view ──────── */
@@ -160,26 +183,6 @@ export function Spotlight({
       onMouseMove={onMove}
     >
       {children}
-    </div>
-  );
-}
-
-/* ── Bar that fills to a percentage on view ─────────────── */
-
-export function Meter({ label, value }: { label: string; value: number }) {
-  const { ref, inView } = useInView<HTMLDivElement>(0.5);
-  return (
-    <div className="meter" ref={ref}>
-      <div className="meter-head">
-        <span>{label}</span>
-        <span className="meter-val">{value}%</span>
-      </div>
-      <div className="meter-track">
-        <div
-          className="meter-fill"
-          style={{ width: inView ? `${value}%` : '0%' }}
-        />
-      </div>
     </div>
   );
 }

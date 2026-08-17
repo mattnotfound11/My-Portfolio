@@ -32,14 +32,11 @@ export type StackGroup = {
   icon: 'layout' | 'server' | 'database' | 'key' | 'tools' | 'shield';
   summary: string;
   items: string[];
-  /** Self-assessed confidence, deliberately honest for a 3rd-year student. */
-  levels: { label: string; value: number }[];
 };
 
 export const STACK: StackGroup[] = [
   {
     id: 'frontend',
-    levels: [{ label: 'React', value: 80 },{ label: 'HTML & CSS', value: 88 },{ label: 'Tailwind CSS', value: 82 },{ label: 'Next.js', value: 65 }],
     label: 'Frontend',
     kicker: 'Interfaces & Experience',
     icon: 'layout',
@@ -49,7 +46,6 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'backend',
-    levels: [{ label: 'Node.js & Express', value: 72 },{ label: 'Python', value: 68 },{ label: 'Java', value: 60 },{ label: 'PHP', value: 58 }],
     label: 'Backend',
     kicker: 'Servers & Logic',
     icon: 'server',
@@ -59,7 +55,6 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'database',
-    levels: [{ label: 'Supabase', value: 78 },{ label: 'PostgreSQL', value: 70 },{ label: 'MySQL', value: 68 }],
     label: 'Database',
     kicker: 'Data & Persistence',
     icon: 'database',
@@ -69,7 +64,6 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'auth',
-    levels: [{ label: 'Supabase Auth', value: 75 },{ label: 'Convex', value: 58 }],
     label: 'Authentication',
     kicker: 'Identity & Access',
     icon: 'key',
@@ -79,12 +73,6 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'security',
-    levels: [
-      { label: 'Secure auth practices', value: 10 },
-      { label: 'Network fundamentals', value: 10 },
-      { label: 'Threat & vuln concepts', value: 10 },
-      { label: 'Packet Tracer', value: 10 },
-    ],
     label: 'Security',
     kicker: 'Analysis & Defence',
     icon: 'shield',
@@ -100,7 +88,6 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'tools',
-    levels: [{ label: 'Git & GitHub', value: 85 },{ label: 'Figma', value: 74 },{ label: 'Vercel', value: 80 },{ label: 'Notion', value: 82 }],
     label: 'Developer Tools',
     kicker: 'Workflow & Delivery',
     icon: 'tools',

@@ -1739,10 +1739,13 @@
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
   height: 2px;
   z-index: 300;
   background: linear-gradient(90deg, var(--amber), var(--violet));
-  transition: width 0.1s linear;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
   pointer-events: none;
 }
 
@@ -1792,46 +1795,6 @@
 
 .spotlight:hover::before {
   opacity: 1;
-}
-
-/* ── Proficiency meters ── */
-
-.meter-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px 22px;
-  margin: 14px 0 26px;
-}
-
-.meter-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: var(--text-soft);
-  margin-bottom: 7px;
-}
-
-.meter-val {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-dim);
-}
-
-.meter-track {
-  height: 4px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
-  overflow: hidden;
-}
-
-.meter-fill {
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--amber-deep), var(--amber));
-  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ── Live GitHub tile ── */

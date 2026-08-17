@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { STACK, TECH_COUNT } from '../data';
 import { Reveal } from '../components/Reveal';
-import { Meter } from '../components/Motion';
 import {
   IconLayout,
   IconServer,
@@ -42,9 +41,8 @@ export function Stack() {
           </Reveal>
           <Reveal delay={0.14}>
             <p className="sec-sub">
-              {TECH_COUNT} technologies across {STACK.length} areas. Everything
-              here is something I have actually worked in — where I am still
-              building the skill, the meters say so.
+              {TECH_COUNT} technologies across {STACK.length} areas — everything
+              listed here is something I have actually written code in.
             </p>
           </Reveal>
         </div>
@@ -94,13 +92,6 @@ export function Stack() {
               </div>
 
               <p className="panel-body">{active.summary}</p>
-
-              <span className="eyebrow">Confidence · self-assessed</span>
-              <div className="meter-grid">
-                {active.levels.map((l) => (
-                  <Meter key={l.label} label={l.label} value={l.value} />
-                ))}
-              </div>
 
               <span className="eyebrow">Technologies</span>
               <div className="tech-grid">
