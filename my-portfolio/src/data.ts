@@ -10,8 +10,6 @@ export const PROFILE = {
   role: 'Web Developer',
   location: 'Iloilo City, Philippines',
   email: 'matttabat@gmail.com',
-  phone: '+63 995 957 6454',
-  phoneHref: '+639959576454',
   linkedin: 'https://www.linkedin.com/in/matthew-tabat-606096387/',
   github: 'https://github.com/mattnotfound11',
   githubHandle: 'mattnotfound11',
@@ -31,11 +29,14 @@ export type StackGroup = {
   icon: 'layout' | 'server' | 'database' | 'shield' | 'tools';
   summary: string;
   items: string[];
+  /** Self-assessed confidence, deliberately honest for a 3rd-year student. */
+  levels: { label: string; value: number }[];
 };
 
 export const STACK: StackGroup[] = [
   {
     id: 'frontend',
+    levels: [{ label: 'React', value: 80 },{ label: 'HTML & CSS', value: 88 },{ label: 'Tailwind CSS', value: 82 },{ label: 'Next.js', value: 65 }],
     label: 'Frontend',
     kicker: 'Interfaces & Experience',
     icon: 'layout',
@@ -45,6 +46,7 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'backend',
+    levels: [{ label: 'Node.js & Express', value: 72 },{ label: 'Python', value: 68 },{ label: 'Java', value: 60 },{ label: 'PHP', value: 58 }],
     label: 'Backend',
     kicker: 'Servers & Logic',
     icon: 'server',
@@ -54,6 +56,7 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'database',
+    levels: [{ label: 'Supabase', value: 78 },{ label: 'PostgreSQL', value: 70 },{ label: 'MySQL', value: 68 },{ label: 'Firebase', value: 62 }],
     label: 'Database',
     kicker: 'Data & Persistence',
     icon: 'database',
@@ -63,6 +66,7 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'auth',
+    levels: [{ label: 'Supabase Auth', value: 75 },{ label: 'Convex', value: 58 }],
     label: 'Authentication',
     kicker: 'Identity & Access',
     icon: 'shield',
@@ -72,6 +76,7 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'tools',
+    levels: [{ label: 'Git & GitHub', value: 85 },{ label: 'Figma', value: 74 },{ label: 'Vercel', value: 80 },{ label: 'Notion', value: 82 }],
     label: 'Developer Tools',
     kicker: 'Workflow & Delivery',
     icon: 'tools',
@@ -167,12 +172,14 @@ export type Certificate = {
   meta: string[];
   /** Badge wording. Attendance records say so plainly rather than posing as skills certs. */
   kind?: 'Verified' | 'Attended';
-  url?: string;
+  /** Scan of the certificate itself, cropped free of verification codes. */
+  image: string;
 };
 
 export const CERTIFICATES: Certificate[] = [
   {
     id: 'aws',
+    image: '/assets/certificates/aws-ai-ml-scholars.jpg',
     issuer: 'Udacity × AWS',
     name: 'AWS AI & ML Scholars',
     year: '2026',
@@ -184,59 +191,60 @@ export const CERTIFICATES: Certificate[] = [
       'PartyRock',
       'AI Productivity App',
     ],
-    url: 'https://www.udacity.com/certificate/e/ea1c3c4a-2cbc-11f1-ba0a-2bd8b4faa744',
   },
   {
     id: 'mcp',
+    image: '/assets/certificates/mcp.jpg',
     issuer: 'Scrimba',
     name: 'Intro to Model Context Protocol (MCP)',
     year: '2026',
     description:
       'How MCP lets AI models talk to external tools and data sources through a standard interface — servers, clients, tools, and resources.',
     meta: ['12 lessons'],
-    url: 'https://scrimba.com/@mattnotfound11:certs;cert2ffentAFPFvjm3JYDV9nxaeTqcp3zbkjez6L8wDbTQBZKf',
   },
   {
     id: 'ui',
+    image: '/assets/certificates/ui-design.jpg',
     issuer: 'Scrimba',
     name: 'Intro to UI Design Fundamentals',
     year: '2026',
     description:
       'The groundwork behind interfaces that read well: visual hierarchy, spacing systems, typography, colour, and layout decisions that hold up under scrutiny.',
     meta: ['21 lessons', '1.2 hours'],
-    url: 'https://scrimba.com/@mattnotfound11:certs;cert24zAwPPowYU9pe4Tz7BgVivDaXtcvLufctxYE',
   },
   {
     id: 'git',
+    image: '/assets/certificates/git-github.jpg',
     issuer: 'Scrimba',
     name: 'Learn Git and GitHub',
     year: '2026',
     description:
       'Version control end to end — branching, merging, resolving conflicts, pull requests, and the collaboration workflow real teams run on.',
     meta: ['40 lessons', '1.7 hours'],
-    url: 'https://scrimba.com/@mattnotfound11:certs;cert2ffentAFPFvjm3JYDV9nxa4r8opCiJy7B9fy1w1er3fNob',
   },
   {
     id: 'css-vars',
+    image: '/assets/certificates/css-variables.jpg',
     issuer: 'Scrimba',
     name: 'Learn CSS Variables',
     year: '2026',
     description:
       'Custom properties as the backbone of a design system — theming, scoped overrides, and keeping a stylesheet maintainable as it grows.',
     meta: ['12 lessons'],
-    url: 'https://scrimba.com/@mattnotfound11:certs;cert2JbLs3qgBjtqwGaJ74KmSPLrFVBLUm7V8B9Ypd',
   },
   {
     id: 'packet-tracer',
+    image: '/assets/certificates/packet-tracer.jpg',
     issuer: 'Cisco Networking Academy',
     name: 'Getting Started with Cisco Packet Tracer',
     year: '2026',
     description:
       'Network simulation fundamentals — building topologies, configuring devices, and tracing how packets actually move between them.',
-    meta: ['Completed 08 Aug 2026', 'Cert ID 00702108'],
+    meta: ['Completed 08 Aug 2026'],
   },
   {
     id: 'ai-fest',
+    image: '/assets/certificates/ai-fest.jpg',
     issuer: '2026 AI Fest · DOST VI',
     name: 'AI GAME ON! — 2026 AI Fest',
     year: '2026',
@@ -255,6 +263,8 @@ export type Milestone = {
   org: string;
   note?: string;
   now?: boolean;
+  /** School crest, shown beside the timeline entry. */
+  logo?: string;
 };
 
 export const EDUCATION: Milestone[] = [

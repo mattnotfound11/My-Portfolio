@@ -1,6 +1,6 @@
 import { CERTIFICATES, EDUCATION } from '../data';
 import { Reveal } from '../components/Reveal';
-import { IconCheck, IconArrow } from '../components/Icons';
+import { IconCheck } from '../components/Icons';
 
 export function Credentials() {
   return (
@@ -30,40 +30,38 @@ export function Credentials() {
         <div className="cert-grid">
           {CERTIFICATES.map((cert, i) => (
             <Reveal key={cert.id} delay={i * 0.06}>
-              <article className="cert-card" style={{ height: '100%' }}>
-                <div className="cert-top">
-                  <span
-                    className={`cert-verified ${
-                      cert.kind === 'Attended' ? 'is-attended' : ''
-                    }`}
-                  >
-                    <IconCheck />
-                    {cert.kind ?? 'Verified'}
-                  </span>
-                  <span className="cert-year">{cert.year}</span>
+              <article className="cert-card">
+                <div className="cert-shot">
+                  <img
+                    src={cert.image}
+                    alt={`${cert.name} certificate issued by ${cert.issuer}`}
+                    loading="lazy"
+                  />
                 </div>
 
-                <p className="cert-issuer">{cert.issuer}</p>
-                <h3 className="cert-name">{cert.name}</h3>
-                <p className="cert-desc">{cert.description}</p>
+                <div className="cert-body">
+                  <div className="cert-top">
+                    <span
+                      className={`cert-verified ${
+                        cert.kind === 'Attended' ? 'is-attended' : ''
+                      }`}
+                    >
+                      <IconCheck />
+                      {cert.kind ?? 'Verified'}
+                    </span>
+                    <span className="cert-year">{cert.year}</span>
+                  </div>
 
-                <div className="cert-meta">
-                  {cert.meta.map((m) => (
-                    <span key={m}>{m}</span>
-                  ))}
+                  <p className="cert-issuer">{cert.issuer}</p>
+                  <h3 className="cert-name">{cert.name}</h3>
+                  <p className="cert-desc">{cert.description}</p>
+
+                  <div className="cert-meta">
+                    {cert.meta.map((m) => (
+                      <span key={m}>{m}</span>
+                    ))}
+                  </div>
                 </div>
-
-                {cert.url && (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cert-link"
-                  >
-                    Verify credential
-                    <IconArrow width={12} height={12} />
-                  </a>
-                )}
               </article>
             </Reveal>
           ))}
@@ -91,6 +89,9 @@ export function Credentials() {
                 className={`tl-item ${item.now ? 'is-now' : ''}`}
                 key={item.role + item.org}
               >
+                {item.logo && (
+                  <img className="tl-logo" src={item.logo} alt="" loading="lazy" />
+                )}
                 <p className="tl-year">{item.year}</p>
                 <h3 className="tl-role">{item.role}</h3>
                 <p className="tl-org">{item.org}</p>

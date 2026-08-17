@@ -2,7 +2,6 @@ import { PROFILE } from '../data';
 import { Reveal } from '../components/Reveal';
 import {
   IconMail,
-  IconPhone,
   IconPin,
   IconLinkedin,
   IconGithub,
@@ -15,12 +14,6 @@ const ROWS = [
     label: 'Email',
     value: PROFILE.email,
     href: `mailto:${PROFILE.email}`,
-  },
-  {
-    icon: IconPhone,
-    label: 'Phone',
-    value: PROFILE.phone,
-    href: `tel:${PROFILE.phoneHref}`,
   },
   {
     icon: IconLinkedin,

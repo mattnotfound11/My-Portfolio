@@ -1,12 +1,8 @@
 import { PROFILE, TECH_COUNT, CERTIFICATES, STACK } from '../data';
 import { Reveal } from '../components/Reveal';
-import {
-  IconGithub,
-  IconLinkedin,
-  IconMail,
-  IconArrow,
-  IconPin,
-} from '../components/Icons';
+import { Counter } from '../components/Motion';
+import { GithubActivity } from '../components/GithubActivity';
+import { IconArrow, IconPin } from '../components/Icons';
 
 export function About() {
   return (
@@ -88,7 +84,7 @@ export function About() {
               <span className="eyebrow">By the numbers</span>
               <div className="stat-row" style={{ marginTop: 16 }}>
                 <div className="stat">
-                  <span className="stat-num">800+</span>
+                  <span className="stat-num"><Counter value="800+" /></span>
                   <span className="stat-label">
                     Students
                     <br />
@@ -96,7 +92,7 @@ export function About() {
                   </span>
                 </div>
                 <div className="stat">
-                  <span className="stat-num">{TECH_COUNT}</span>
+                  <span className="stat-num"><Counter value={String(TECH_COUNT)} /></span>
                   <span className="stat-label">
                     Tech
                     <br />
@@ -105,7 +101,7 @@ export function About() {
                 </div>
                 <div className="stat">
                   <span className="stat-num">
-                    {String(CERTIFICATES.length).padStart(2, '0')}
+                    <Counter value={String(CERTIFICATES.length).padStart(2, '0')} />
                   </span>
                   <span className="stat-label">
                     Creden&shy;tials
@@ -132,42 +128,9 @@ export function About() {
             </article>
           </Reveal>
 
-          {/* Socials */}
+          {/* Live GitHub */}
           <Reveal delay={0.24} className="span-2">
-            <article className="bento-card" style={{ height: '100%' }}>
-              <span className="eyebrow">Stay connected</span>
-              <div className="social-row" style={{ marginTop: 14 }}>
-                <a
-                  href={PROFILE.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-btn"
-                  aria-label="GitHub"
-                >
-                  <IconGithub />
-                </a>
-                <a
-                  href={PROFILE.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-btn"
-                  aria-label="LinkedIn"
-                >
-                  <IconLinkedin />
-                </a>
-                <a
-                  href={`mailto:${PROFILE.email}`}
-                  className="social-btn"
-                  aria-label="Email"
-                >
-                  <IconMail />
-                </a>
-              </div>
-              <p className="tile-headline">Profiles</p>
-              <p className="id-blurb" style={{ marginTop: 4 }}>
-                @{PROFILE.githubHandle}
-              </p>
-            </article>
+            <GithubActivity />
           </Reveal>
 
           {/* CTA — full-width closing band */}

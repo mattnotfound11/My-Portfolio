@@ -1,6 +1,7 @@
 import { PROFILE, MARQUEE } from '../data';
 import { Reveal } from '../components/Reveal';
 import { IconChevronDown, IconArrow } from '../components/Icons';
+import { SplitText } from '../components/Motion';
 
 export function Hero() {
   return (
@@ -26,9 +27,11 @@ export function Hero() {
 
           <Reveal delay={0.14}>
             <h1 className="hero-title">
-              {PROFILE.first}
+              <SplitText text={PROFILE.first} />
               <br />
-              <span className="tone-dim">{PROFILE.last}</span>
+              <span className="tone-dim">
+                <SplitText text={PROFILE.last} delay={0.12} />
+              </span>
             </h1>
           </Reveal>
 

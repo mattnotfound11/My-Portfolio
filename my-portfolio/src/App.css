@@ -1207,17 +1207,45 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
   border-radius: var(--r-lg);
   border: 1px solid var(--line);
   background: linear-gradient(160deg, var(--card-hi), var(--card));
-  padding: 24px;
-  padding-bottom: 62px;
+  overflow: hidden;
   transition: all var(--t-base);
 }
 
 .cert-card:hover {
   border-color: var(--line-amber);
   transform: translateY(-4px);
+}
+
+/* Scan of the certificate itself */
+.cert-shot {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #f4f4f5;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.cert-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform var(--t-slow);
+}
+
+.cert-card:hover .cert-shot img {
+  transform: scale(1.03);
+}
+
+.cert-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px;
 }
 
 .cert-top {
@@ -1367,6 +1395,27 @@
 .tl-item.is-now::before {
   background: var(--amber);
   box-shadow: 0 0 0 4px rgba(255, 182, 39, 0.16);
+}
+
+/* School crest beside a timeline entry */
+.tl-logo {
+  position: absolute;
+  left: -76px;
+  top: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #fff;
+  padding: 4px;
+  border: 1px solid var(--line-hi);
+}
+
+@media (max-width: 720px) {
+  .tl-logo {
+    position: static;
+    margin-bottom: 10px;
+  }
 }
 
 .tl-year {
@@ -1594,4 +1643,462 @@
   background: var(--amber);
   color: #1a1200;
   border-color: var(--amber);
+}
+
+/* ═════════════════════════════════════════════
+   Motion system & added features
+   ═════════════════════════════════════════════ */
+
+/* ── Landing curtain ── */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  background: var(--bg-deep);
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity 0.6s ease 0.3s;
+}
+
+.intro.is-out {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.intro-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.intro-sign {
+  width: min(760px, 86vw);
+  margin-bottom: -60px;
+  /* Art is black-on-white: invert to white ink, then screen out the
+     now-black backdrop so no rectangle shows against the curtain. */
+  filter: invert(1);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+  animation: sign-in 1.1s var(--ease-out) forwards;
+}
+
+@keyframes sign-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.intro-role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  opacity: 0;
+  animation: sign-in 0.8s var(--ease-out) 0.55s forwards;
+}
+
+.intro-count {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background: var(--amber);
+  animation: intro-bar 1.75s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes intro-bar {
+  to {
+    width: 100%;
+  }
+}
+
+/* Stage lifts in behind the curtain */
+.stage {
+  opacity: 0;
+  transform: scale(1.015);
+  transition: opacity 0.8s var(--ease-out), transform 1s var(--ease-out);
+}
+
+.stage.is-ready {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Scroll progress ── */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 300;
+  background: linear-gradient(90deg, var(--amber), var(--violet));
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ── Word-stagger headline ── */
+
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-right: 0.22em;
+}
+
+.split-inner {
+  display: inline-block;
+  transform: translateY(105%);
+  opacity: 0;
+  transition: transform 0.85s var(--ease-out), opacity 0.85s var(--ease-out);
+}
+
+.split-inner.is-in {
+  transform: none;
+  opacity: 1;
+}
+
+/* ── Cursor spotlight ── */
+
+.spotlight {
+  position: relative;
+  height: 100%;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 182, 39, 0.1),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity var(--t-base);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
+/* ── Proficiency meters ── */
+
+.meter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px 22px;
+  margin: 14px 0 26px;
+}
+
+.meter-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  margin-bottom: 7px;
+}
+
+.meter-val {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.meter-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--amber-deep), var(--amber));
+  transition: width 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Live GitHub tile ── */
+
+.gh-tile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.gh-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.gh-handle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  transition: color var(--t-fast);
+}
+
+.gh-handle:hover {
+  color: var(--amber);
+}
+
+.gh-unit {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+}
+
+.gh-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.gh-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  transition: all var(--t-fast);
+}
+
+.gh-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--line);
+}
+
+.gh-name {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--text-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.gh-lang {
+  color: var(--amber);
+}
+
+.gh-empty {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 10px;
+}
+
+.gh-row.is-skeleton {
+  padding: 11px;
+}
+
+.gh-bone {
+  display: block;
+  height: 9px;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.04)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Floating dock + terminal ── */
+
+.dock-btn {
+  position: fixed;
+  bottom: 26px;
+  z-index: 120;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line-hi);
+  background: rgba(18, 17, 22, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-soft);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all var(--t-fast);
+}
+
+.dock-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-amber);
+  color: var(--amber);
+}
+
+.dock-left {
+  left: 26px;
+}
+.dock-right {
+  right: 26px;
+}
+
+.dock-caret {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.term {
+  position: fixed;
+  left: 26px;
+  bottom: 88px;
+  z-index: 120;
+  width: min(430px, calc(100vw - 52px));
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-hi);
+  background: rgba(10, 9, 12, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  animation: term-in 0.32s var(--ease-out);
+}
+
+@keyframes term-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.term-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.term-title {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.term-body {
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.85;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.term-cmd {
+  color: var(--amber);
+}
+
+.term-out {
+  color: var(--text-muted);
+  padding-left: 14px;
+}
+
+.term-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background: var(--amber);
+  animation: blink 1.05s steps(2) infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .dock-btn {
+    width: 44px;
+    height: 44px;
+    bottom: 18px;
+  }
+  .dock-left {
+    left: 18px;
+  }
+  .dock-right {
+    right: 18px;
+  }
+  .term {
+    left: 18px;
+    bottom: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro,
+  .intro-sign,
+  .intro-role,
+  .intro-count {
+    animation: none;
+    transition: none;
+  }
+  .split-inner {
+    transform: none;
+    opacity: 1;
+  }
+  .stage {
+    opacity: 1;
+    transform: none;
+  }
 }
