@@ -65,9 +65,7 @@ export function Navbar() {
     <>
       <header className="nav">
         <a href="#home" className="nav-brand" aria-label="Matthew Tabat — home">
-          <span className="nav-mark">
-            <img src="/assets/signature.png" alt="" />
-          </span>
+          <span className="nav-mark">MT</span>
         </a>
 
         <nav className="nav-dock" aria-label="Sections">

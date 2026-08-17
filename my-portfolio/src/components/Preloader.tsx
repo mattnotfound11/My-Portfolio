@@ -35,8 +35,8 @@ export function Preloader({ onDone }: { onDone: () => void }) {
   return (
     <div className={`intro ${phase === 'out' ? 'is-out' : ''}`} aria-hidden="true">
       <div className="intro-inner">
-        <img src="/assets/signature.png" alt="" className="intro-sign" />
-        <span className="intro-role">Web Developer</span>
+        <span className="intro-sign">Matthew</span>
+        <span className="intro-role">Software Developer &amp; Security Analyst</span>
       </div>
       <span className="intro-count" />
     </div>

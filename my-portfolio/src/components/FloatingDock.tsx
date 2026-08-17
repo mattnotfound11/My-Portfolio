@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { PROFILE } from '../data';
-import { IconMail, IconClose } from './Icons';
+import { IconClose } from './Icons';
 
 const LINES = [
   '> whoami',
-  'matthew tabat — web developer, iloilo city',
+  'matthew tabat — software developer & security analyst, iloilo city',
   '> education',
   'bs information technology, university of san agustin (3rd year)',
   '> shipped',
@@ -57,10 +57,6 @@ export function FloatingDock() {
       >
         {open ? <IconClose width={17} height={17} /> : <span className="dock-caret">&gt;_</span>}
       </button>
-
-      <a href="#contact" className="dock-btn dock-right" aria-label="Jump to contact">
-        <IconMail width={17} height={17} />
-      </a>
 
       {open && (
         <div className="term" role="dialog" aria-label="About Matthew, terminal view">

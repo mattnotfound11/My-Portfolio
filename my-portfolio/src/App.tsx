@@ -5,6 +5,7 @@ import { Preloader, introAlreadySeen } from './components/Preloader';
 import { SmoothScroll } from './components/SmoothScroll';
 import { ScrollProgress } from './components/Motion';
 import { FloatingDock } from './components/FloatingDock';
+import { Chatbot } from './components/Chatbot';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { Stack } from './sections/Stack';
@@ -35,6 +36,7 @@ function App() {
         </main>
         <Footer />
         <FloatingDock />
+        <Chatbot />
       </div>
     </>
   );

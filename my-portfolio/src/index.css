@@ -8,6 +8,8 @@
   --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-serif: 'Instrument Serif', Georgia, serif;
+  /* Brand script for the landing curtain and the corner monogram */
+  --font-script: 'Lobster Two', 'Yellowtail', cursive;
 
   /* ── Canvas ── */
   --bg: #0b0a0c;
