@@ -1,0 +1,194 @@
+/* ============================================
+   MATTHEW TABAT — Design tokens & reset
+   Near-black canvas, amber primary, violet secondary.
+   ============================================ */
+
+:root {
+  /* ── Type ── */
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+
+  /* ── Canvas ── */
+  --bg: #0b0a0c;
+  --bg-deep: #060507;
+  --surface: #121116;
+  --card: #16151b;
+  --card-hi: #1c1b22;
+  --card-hover: #201f27;
+
+  /* ── Text ── */
+  --text: #ffffff;
+  --text-soft: #d4d4d8;
+  --text-muted: #8f8f9b;
+  --text-dim: #5f5f6b;
+
+  /* ── Accents ── */
+  --amber: #ffb627;
+  --amber-deep: #f59e0b;
+  --violet: #7c5cff;
+  --violet-deep: #6d4aff;
+  --mint: #34d399;
+  --rose: #fb7185;
+
+  /* ── Borders ── */
+  --line: rgba(255, 255, 255, 0.07);
+  --line-hi: rgba(255, 255, 255, 0.12);
+  --line-amber: rgba(255, 182, 39, 0.35);
+  --line-violet: rgba(124, 92, 255, 0.35);
+
+  /* ── Glows ── */
+  --glow-amber: radial-gradient(
+    ellipse 60% 50% at 50% 0%,
+    rgba(255, 182, 39, 0.18) 0%,
+    transparent 70%
+  );
+  --glow-violet: radial-gradient(
+    ellipse 60% 50% at 50% 0%,
+    rgba(124, 92, 255, 0.18) 0%,
+    transparent 70%
+  );
+
+  /* ── Geometry ── */
+  --shell: 1240px;
+  --gutter: 24px;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-full: 999px;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 0.18s var(--ease-out);
+  --t-base: 0.32s var(--ease-out);
+  --t-slow: 0.6s var(--ease-out);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Floating navbar clearance for anchor jumps */
+  scroll-padding-top: 110px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text-soft);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--amber);
+  color: #1a1200;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2932;
+  border-radius: 999px;
+  border: 2px solid var(--bg-deep);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3945;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
