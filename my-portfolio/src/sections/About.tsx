@@ -39,7 +39,7 @@ export function About() {
                 loading="lazy"
               />
               <div className="id-copy">
-                <span className="eyebrow">A {PROFILE.role}</span>
+                <span className="eyebrow">A {PROFILE.roleShort}</span>
                 <h3 className="id-name">
                   {PROFILE.first}
                   <br />

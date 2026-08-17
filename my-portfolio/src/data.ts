@@ -7,7 +7,10 @@ export const PROFILE = {
   name: 'Matthew Tabat',
   first: 'Matthew',
   last: 'Tabat',
-  role: 'Web Developer',
+  role: 'Software Developer & Security Analyst',
+  roleShort: 'Software Developer',
+  /* Stacked hero wordmark, one entry per line. */
+  titleLines: ['SOFTWARE', 'DEVELOPER', '& SECURITY ANALYST'],
   location: 'Iloilo City, Philippines',
   email: 'matttabat@gmail.com',
   linkedin: 'https://www.linkedin.com/in/matthew-tabat-606096387/',
@@ -17,7 +20,7 @@ export const PROFILE = {
   program: 'BS Information Technology',
   year: '3rd Year',
   blurb:
-    'Third-year Information Technology student at the University of San Agustin. I build web applications that solve concrete problems — starting with attendance for 800+ pharmacy students.',
+    'Third-year Information Technology student at the University of San Agustin. I build web applications that solve concrete problems, and I care about the security of what I ship — starting with attendance for 800+ pharmacy students.',
 } as const;
 
 /* ── Tech stack, grouped ───────────────────────────────── */
@@ -304,7 +307,8 @@ export const NAV = [
 ] as const;
 
 export const MARQUEE = [
-  'Web Developer',
+  'Software Developer',
+  'Security Analyst',
   'React & Next.js',
   'Full Stack',
   'BSIT Student',
