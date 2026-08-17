@@ -59,13 +59,13 @@ export const STACK: StackGroup[] = [
   },
   {
     id: 'database',
-    levels: [{ label: 'Supabase', value: 78 },{ label: 'PostgreSQL', value: 70 },{ label: 'MySQL', value: 68 },{ label: 'Firebase', value: 62 }],
+    levels: [{ label: 'Supabase', value: 78 },{ label: 'PostgreSQL', value: 70 },{ label: 'MySQL', value: 68 }],
     label: 'Database',
     kicker: 'Data & Persistence',
     icon: 'database',
     summary:
-      'Designing schemas and querying them without surprises. Relational work in PostgreSQL and MySQL, plus managed platforms like Supabase, Firebase, and Convex when speed to ship matters.',
-    items: ['Supabase', 'PostgreSQL', 'MySQL', 'Firebase', 'Convex'],
+      'Designing schemas and querying them without surprises. Relational work in PostgreSQL and MySQL, plus managed platforms like Supabase and Convex when speed to ship matters.',
+    items: ['Supabase', 'PostgreSQL', 'MySQL', 'Convex'],
   },
   {
     id: 'auth',
@@ -80,10 +80,10 @@ export const STACK: StackGroup[] = [
   {
     id: 'security',
     levels: [
-      { label: 'Secure auth practices', value: 68 },
-      { label: 'Network fundamentals', value: 55 },
-      { label: 'Threat & vuln concepts', value: 45 },
-      { label: 'Packet Tracer', value: 60 },
+      { label: 'Secure auth practices', value: 10 },
+      { label: 'Network fundamentals', value: 10 },
+      { label: 'Threat & vuln concepts', value: 10 },
+      { label: 'Packet Tracer', value: 10 },
     ],
     label: 'Security',
     kicker: 'Analysis & Defence',
