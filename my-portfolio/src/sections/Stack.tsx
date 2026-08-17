@@ -7,6 +7,7 @@ import {
   IconServer,
   IconDatabase,
   IconShield,
+  IconKey,
   IconTools,
 } from '../components/Icons';
 
@@ -14,8 +15,9 @@ const STACK_ICONS = {
   layout: IconLayout,
   server: IconServer,
   database: IconDatabase,
-  shield: IconShield,
+  key: IconKey,
   tools: IconTools,
+  shield: IconShield,
 } as const;
 
 export function Stack() {
@@ -40,9 +42,9 @@ export function Stack() {
           </Reveal>
           <Reveal delay={0.14}>
             <p className="sec-sub">
-              {TECH_COUNT} technologies across five areas — everything listed here
-              is something I have written code in, not something I have only read
-              about.
+              {TECH_COUNT} technologies across {STACK.length} areas. Everything
+              here is something I have actually worked in — where I am still
+              building the skill, the meters say so.
             </p>
           </Reveal>
         </div>

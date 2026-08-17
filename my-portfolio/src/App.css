@@ -2676,3 +2676,162 @@
     height: min(460px, calc(100vh - 120px));
   }
 }
+
+/* ── Currently studying (in progress, not yet earned) ── */
+
+.learn-strip {
+  margin-top: 56px;
+  padding-top: 34px;
+  border-top: 1px solid var(--line);
+}
+
+.learn-head {
+  margin-bottom: 20px;
+}
+
+.learn-lede {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 7px;
+}
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+/* Dashed edge signals "not finished" at a glance */
+.learn-card {
+  height: 100%;
+  padding: 22px;
+  border-radius: var(--r-lg);
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.018);
+  transition: border-color var(--t-base), background var(--t-base);
+}
+
+.learn-card:hover {
+  border-color: var(--line-violet);
+  background: rgba(124, 92, 255, 0.05);
+}
+
+.learn-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.learn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 11px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--line-violet);
+  background: rgba(124, 92, 255, 0.1);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a992ff;
+}
+
+.learn-pulse {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #a992ff;
+  animation: pulse 2s infinite;
+}
+
+/* ── Currently building (live but unfinished) ── */
+
+.build-strip {
+  margin-top: 90px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+}
+
+.build-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.build-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, var(--card-hi), var(--card));
+  overflow: hidden;
+  transition: border-color var(--t-base), transform var(--t-base);
+}
+
+.build-card:hover {
+  border-color: var(--line-violet);
+  transform: translateY(-4px);
+}
+
+.build-shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-deep);
+}
+
+.build-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform var(--t-slow);
+}
+
+.build-card:hover .build-shot img {
+  transform: scale(1.04);
+}
+
+.build-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  padding: 22px;
+}
+
+.build-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.build-kind {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.build-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.038em;
+}
+
+.build-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 6px;
+}

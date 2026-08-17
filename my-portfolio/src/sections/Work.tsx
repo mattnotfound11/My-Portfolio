@@ -1,6 +1,6 @@
-import { PROJECTS } from '../data';
+import { PROJECTS, BUILDING } from '../data';
 import { Reveal } from '../components/Reveal';
-import { IconArrow } from '../components/Icons';
+import { IconArrow, IconGithub } from '../components/Icons';
 
 export function Work() {
   return (
@@ -87,6 +87,90 @@ export function Work() {
             </article>
           </Reveal>
         ))}
+
+        {/* ── Currently building ── */}
+        <div className="build-strip">
+          <div className="sec-head sec-head--left" style={{ marginBottom: 30 }}>
+            <Reveal>
+              <span className="badge-pill badge-pill--violet">
+                <span className="dot" />
+                Currently building
+              </span>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <h3 className="sec-title" style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}>
+                Live, still <span className="tone-violet">in progress</span>
+              </h3>
+            </Reveal>
+            <Reveal delay={0.14}>
+              <p className="sec-sub">
+                Both are deployed and usable today, and both are still being
+                worked on — so treat them as work in motion rather than finished
+                case studies.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="build-grid">
+            {BUILDING.map((b, i) => (
+              <Reveal key={b.id} delay={i * 0.08}>
+                <article className="build-card">
+                  <a
+                    href={b.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="build-shot"
+                    aria-label={`Open ${b.name}`}
+                  >
+                    <img src={b.image} alt={`${b.name} home page`} loading="lazy" />
+                  </a>
+
+                  <div className="build-body">
+                    <div className="build-top">
+                      <span className="learn-badge">
+                        <span className="learn-pulse" />
+                        In progress
+                      </span>
+                      <span className="build-kind">{b.kind}</span>
+                    </div>
+
+                    <h4 className="build-name">{b.name}</h4>
+                    <p className="cert-desc">{b.blurb}</p>
+
+                    <div className="chip-cloud">
+                      {b.stack.map((t) => (
+                        <span className="chip" key={t}>
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="build-actions">
+                      <a
+                        href={b.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-ghost btn-mono"
+                      >
+                        Visit site
+                        <IconArrow width={14} height={14} />
+                      </a>
+                      <a
+                        href={b.repo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-ghost btn-mono"
+                      >
+                        <IconGithub width={14} height={14} />
+                        Source
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

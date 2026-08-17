@@ -29,7 +29,7 @@ export type StackGroup = {
   id: string;
   label: string;
   kicker: string;
-  icon: 'layout' | 'server' | 'database' | 'shield' | 'tools';
+  icon: 'layout' | 'server' | 'database' | 'key' | 'tools' | 'shield';
   summary: string;
   items: string[];
   /** Self-assessed confidence, deliberately honest for a 3rd-year student. */
@@ -72,10 +72,31 @@ export const STACK: StackGroup[] = [
     levels: [{ label: 'Supabase Auth', value: 75 },{ label: 'Convex', value: 58 }],
     label: 'Authentication',
     kicker: 'Identity & Access',
-    icon: 'shield',
+    icon: 'key',
     summary:
       'Handling sign-up, sessions, and access control so the right person sees the right data. I use Supabase Auth and Convex rather than rolling my own — auth is the wrong place to be clever.',
     items: ['Supabase Auth', 'Convex'],
+  },
+  {
+    id: 'security',
+    levels: [
+      { label: 'Secure auth practices', value: 68 },
+      { label: 'Network fundamentals', value: 55 },
+      { label: 'Threat & vuln concepts', value: 45 },
+      { label: 'Packet Tracer', value: 60 },
+    ],
+    label: 'Security',
+    kicker: 'Analysis & Defence',
+    icon: 'shield',
+    summary:
+      'The side I am actively building. I am working through Cisco\u2019s Introduction to Cybersecurity and Hack The Box Academy, and I apply what I have so far by using vetted auth providers instead of rolling my own and by thinking about attack surface before I ship rather than after.',
+    items: [
+      'Cisco Packet Tracer',
+      'Network Fundamentals',
+      'Threat & Vulnerability Concepts',
+      'Secure Authentication',
+      'Hack The Box Academy',
+    ],
   },
   {
     id: 'tools',
@@ -161,6 +182,46 @@ export const PROJECTS: Project[] = [
       },
     ],
     stack: ['React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'QR Scanning'],
+  },
+];
+
+
+/* ── In-progress builds ────────────────────────────────── */
+
+export type Building = {
+  id: string;
+  name: string;
+  kind: string;
+  image: string;
+  live: string;
+  repo: string;
+  blurb: string;
+  stack: string[];
+};
+
+/** Live but still being worked on — kept apart from shipped work. */
+export const BUILDING: Building[] = [
+  {
+    id: 'kapigasim',
+    name: 'Kapigasm Coffee',
+    kind: 'Cafe website',
+    image: '/assets/projects/kapigasim.jpg',
+    live: 'https://kapigasim-iloilo.vercel.app',
+    repo: 'https://github.com/mattnotfound11/Kapigasim-Iloilo',
+    blurb:
+      'Site for a coffee shop in Pueblo Concepcion, Mandurriao. Full menu with live prices, branch locations and opening hours, customer reviews, and a downloadable menu. Split into a React front end and an Express API.',
+    stack: ['React', 'React Router', 'Vite', 'Tailwind CSS', 'Node.js', 'Express'],
+  },
+  {
+    id: 'ocd-iloilo',
+    name: 'OCD Iloilo',
+    kind: 'Car detailing studio',
+    image: '/assets/projects/ocd-iloilo.jpg',
+    live: 'https://ocd-iloilo.vercel.app/',
+    repo: 'https://github.com/mattnotfound11/OCD-Iloilo',
+    blurb:
+      'Booking site for a Gyeon-certified detailing studio. Tiered service packages with pricing, an appointment flow, photo gallery, and a scripted assistant that answers questions on services and booking.',
+    stack: ['React', 'TypeScript', 'React Router', 'Vite', 'Tailwind CSS'],
   },
 ];
 
@@ -255,6 +316,31 @@ export const CERTIFICATES: Certificate[] = [
       'Regional AI conference in Iloilo City organised by DOST Region VI with DICT, DTI, and the Iloilo Business Club. Attended as a delegate of ITSA.',
     meta: ['Certificate of Appearance', 'Iloilo City', '04 Aug 2026'],
     kind: 'Attended',
+  },
+];
+
+/* ── Currently studying ────────────────────────────────── */
+
+export type Learning = {
+  id: string;
+  issuer: string;
+  name: string;
+  note: string;
+};
+
+/** In progress — deliberately NOT listed among earned credentials. */
+export const LEARNING: Learning[] = [
+  {
+    id: 'cisco-cyber',
+    issuer: 'Cisco Networking Academy',
+    name: 'Introduction to Cybersecurity',
+    note: 'Threat landscape, attack types, and the principles behind defending networks and data.',
+  },
+  {
+    id: 'htb',
+    issuer: 'Hack The Box',
+    name: 'HTB Academy — Intro',
+    note: 'Hands-on offensive security fundamentals: reconnaissance, common vulnerabilities, and how attackers actually think.',
   },
 ];
 

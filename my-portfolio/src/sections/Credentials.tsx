@@ -1,4 +1,4 @@
-import { CERTIFICATES, EDUCATION } from '../data';
+import { CERTIFICATES, EDUCATION, LEARNING } from '../data';
 import { Reveal } from '../components/Reveal';
 import { IconCheck } from '../components/Icons';
 
@@ -65,6 +65,36 @@ export function Credentials() {
               </article>
             </Reveal>
           ))}
+        </div>
+
+        {/* ── In progress ── */}
+        <div className="learn-strip">
+          <div className="learn-head">
+            <span className="eyebrow">Currently studying</span>
+            <p className="learn-lede">
+              In progress right now — listed separately from what I've earned.
+            </p>
+          </div>
+
+          <div className="learn-grid">
+            {LEARNING.map((l, i) => (
+              <Reveal key={l.id} delay={i * 0.07}>
+                <article className="learn-card">
+                  <div className="learn-top">
+                    <span className="learn-badge">
+                      <span className="learn-pulse" />
+                      In progress
+                    </span>
+                    <span className="cert-issuer" style={{ margin: 0 }}>
+                      {l.issuer}
+                    </span>
+                  </div>
+                  <h3 className="cert-name">{l.name}</h3>
+                  <p className="cert-desc">{l.note}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
         </div>
 
         {/* ── Education ── */}

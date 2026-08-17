@@ -115,6 +115,13 @@ export const IconTools = (p: P) => (
   </svg>
 );
 
+export const IconKey = (p: P) => (
+  <svg {...base} {...p}>
+    <circle cx="8" cy="12" r="4" />
+    <path d="M12 12h9M18 12v3.5M15.5 12v2.5" />
+  </svg>
+);
+
 export const IconArrow = (p: P) => (
   <svg {...base} {...p}>
     <path d="M7 17 17 7M9 7h8v8" />

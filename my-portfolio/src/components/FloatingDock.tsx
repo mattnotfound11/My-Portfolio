@@ -11,6 +11,8 @@ const LINES = [
   'pharmatrack — qr attendance, 800+ students, in production',
   '> stack',
   'react · next.js · node · supabase · postgres · tailwind',
+  '> studying',
+  'cisco intro to cybersecurity · hack the box academy',
   '> status',
   'open to internships and junior roles',
   '> contact',

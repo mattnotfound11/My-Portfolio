@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { PROFILE, PROJECTS, CERTIFICATES, STACK, TECH_COUNT } from '../data';
+import {
+  PROFILE,
+  PROJECTS,
+  CERTIFICATES,
+  STACK,
+  TECH_COUNT,
+  LEARNING,
+  BUILDING,
+} from '../data';
 import { IconClose, IconArrow } from './Icons';
 
 type Msg = { from: 'bot' | 'me'; text: string };
@@ -13,7 +21,7 @@ type Rule = { keys: string[]; answer: () => string };
 
 const RULES: Rule[] = [
   {
-    keys: ['who are', 'yourself', 'introduce', 'your bio', 'about you'],
+    keys: ['who are you', 'about yourself', 'yourself', 'introduce', 'your bio'],
     answer: () =>
       `I'm ${PROFILE.name}, a ${PROFILE.role.toLowerCase()} based in ${PROFILE.location}. I'm a ${PROFILE.year.toLowerCase()} ${PROFILE.program} student at ${PROFILE.school}, and I build web applications that real institutions actually use.`,
   },
@@ -21,7 +29,7 @@ const RULES: Rule[] = [
     keys: ['project', 'pharmatrack', 'work', 'built', 'portfolio', 'app'],
     answer: () => {
       const p = PROJECTS[0];
-      return `My main shipped project is ${p.title} — ${p.tagline} ${p.summary} It's live and in daily use: ${p.metrics.map((m) => `${m.value} ${m.label.toLowerCase()}`).join(', ')}. Built with ${p.stack.join(', ')}.`;
+      return `My main shipped project is ${p.title} — ${p.tagline} ${p.summary} It's live and in daily use: ${p.metrics.map((m) => `${m.value} ${m.label.toLowerCase()}`).join(', ')}. Built with ${p.stack.join(', ')}.\n\nI'm also currently building:\n\n${BUILDING.map((b) => `• ${b.name} (${b.kind}) — ${b.stack.slice(0, 4).join(', ')}`).join('\n')}`;
     },
   },
   {
@@ -30,12 +38,12 @@ const RULES: Rule[] = [
       `I work across ${TECH_COUNT} technologies in ${STACK.length} areas:\n\n${STACK.map((g) => `• ${g.label}: ${g.items.join(', ')}`).join('\n')}`,
   },
   {
-    keys: ['security', 'analyst', 'cyber', 'hack', 'pentest'],
+    keys: ['security', 'analyst', 'cyber', 'hack the box', 'htb', 'pentest', 'cybersecurity'],
     answer: () =>
-      `Alongside development I work as a security analyst — I care about how the things I ship hold up, not just that they run. On the credential side I've completed Cisco's Getting Started with Cisco Packet Tracer, and I handle auth through vetted providers (Supabase Auth, Convex) rather than rolling my own.`,
+      `Security is the side I'm actively building. I've completed Cisco's Getting Started with Cisco Packet Tracer, and I'm currently working through:\n\n${LEARNING.map((l) => `• ${l.name} — ${l.issuer}`).join('\n')}\n\nIn practice I handle auth through vetted providers (Supabase Auth, Convex) rather than rolling my own, and I think about attack surface before shipping rather than after.`,
   },
   {
-    keys: ['cert', 'credential', 'course', 'aws', 'scrimba', 'learn'],
+    keys: ['cert', 'credential', 'course', 'aws', 'scrimba'],
     answer: () =>
       `I hold ${CERTIFICATES.length} credentials:\n\n${CERTIFICATES.map((c) => `• ${c.name} — ${c.issuer} (${c.year})`).join('\n')}\n\nScans of each are in the Credentials section.`,
   },
@@ -50,9 +58,14 @@ const RULES: Rule[] = [
       `The fastest way to reach me is email: ${PROFILE.email}. I'm also on LinkedIn and GitHub (@${PROFILE.githubHandle}) — all linked in the Contact section. I reply to everything.`,
   },
   {
-    keys: ['available', 'intern', 'job', 'open', 'freelance', 'opportunit'],
+    keys: ['available', 'intern', 'job', 'open to', 'hiring', 'freelance', 'opportunit'],
     answer: () =>
       `Yes — I'm open to internships, junior developer roles, and student collaborations. Email me at ${PROFILE.email} and I'll get back to you.`,
+  },
+  {
+    keys: ['kapigasm', 'kapigasim', 'ocd', 'detailing', 'coffee', 'cafe', 'building'],
+    answer: () =>
+      `Two live builds still in progress:\n\n${BUILDING.map((b) => `• ${b.name} — ${b.kind}. ${b.blurb} Stack: ${b.stack.join(', ')}.`).join('\n\n')}`,
   },
   {
     keys: ['github', 'repo', 'code', 'source'],
