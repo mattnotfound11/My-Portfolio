@@ -615,26 +615,16 @@
 /* Identity tile — photo stretches to the full height of the double-row card */
 .id-tile {
   display: flex;
-  align-items: center;
-  gap: 22px;
-  padding: 22px;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
 }
 
-/* Fixed square so the tile keeps a sane height */
+/* Full-bleed square portrait — the focal point of the section */
 .id-tile .pswap {
-  width: 190px;
-  flex: 0 0 190px;
-}
-
-@media (max-width: 560px) {
-  .id-tile {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .id-tile .pswap {
-    width: 100%;
-    flex: none;
-  }
+  width: 100%;
+  flex: none;
+  border-radius: calc(var(--r-md) - 2px);
 }
 
 .id-photo {
@@ -831,11 +821,6 @@
   .id-tile {
     flex-direction: column;
     align-items: flex-start;
-  }
-  .id-photo {
-    width: 100%;
-    height: 240px;
-    object-position: center 20%;
   }
 }
 

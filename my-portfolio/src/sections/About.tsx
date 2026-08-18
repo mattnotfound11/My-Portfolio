@@ -31,7 +31,7 @@ export function About() {
 
         <div className="bento">
           {/* Identity */}
-          <Reveal className="span-2">
+          <Reveal className="span-2 row-2">
             <article className="bento-card id-tile" style={{ height: '100%' }}>
               <ProfileSwap
                 base="/assets/profile.jpg"
@@ -112,7 +112,7 @@ export function About() {
           </Reveal>
 
           {/* Disciplines */}
-          <Reveal delay={0.18} className="span-2">
+          <Reveal delay={0.18} className="span-4">
             <article className="bento-card" style={{ height: '100%' }}>
               <span className="eyebrow">What I work across</span>
               <div className="chip-cloud">
