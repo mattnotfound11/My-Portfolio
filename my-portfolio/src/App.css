@@ -579,6 +579,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  align-items: stretch;
 }
 
 .bento-card {
@@ -614,18 +615,34 @@
 /* Identity tile — photo stretches to the full height of the double-row card */
 .id-tile {
   display: flex;
+  align-items: center;
   gap: 22px;
-  align-items: stretch;
+  padding: 22px;
+}
+
+/* Fixed square so the tile keeps a sane height */
+.id-tile .pswap {
+  width: 190px;
+  flex: 0 0 190px;
+}
+
+@media (max-width: 560px) {
+  .id-tile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .id-tile .pswap {
+    width: 100%;
+    flex: none;
+  }
 }
 
 .id-photo {
-  width: 168px;
-  flex-shrink: 0;
-  align-self: stretch;
-  min-height: 200px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: var(--r-md);
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center 28%;
   border: 1px solid var(--line-hi);
   filter: contrast(1.06) saturate(1.05);
 }
@@ -633,28 +650,29 @@
 .id-copy {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 10px;
 }
 
 .id-name {
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-size: clamp(1.6rem, 2.4vw, 2.15rem);
   font-weight: 800;
   letter-spacing: -0.045em;
-  line-height: 1.02;
-  margin-block: 6px 10px;
+  line-height: 1.04;
+  margin: 0;
 }
 
 .id-blurb {
   color: var(--text-muted);
-  font-size: 0.92rem;
-  line-height: 1.55;
+  font-size: 0.9rem;
+  line-height: 1.62;
+  margin: 0;
 }
 
 /* Stat tiles */
 .stat-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .stat {
@@ -667,11 +685,12 @@
 
 .stat-num {
   display: block;
-  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-size: clamp(1.55rem, 2.6vw, 2rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   color: var(--text);
   line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 .stat-label {
@@ -705,17 +724,18 @@
 }
 
 .tile-headline {
-  font-size: 1.25rem;
+  font-size: 1.12rem;
   font-weight: 700;
-  letter-spacing: -0.035em;
-  margin-top: 4px;
+  letter-spacing: -0.03em;
+  margin-top: 6px;
+  color: var(--text-soft);
 }
 
 .tile-big {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
   font-weight: 800;
   letter-spacing: -0.05em;
-  line-height: 1;
+  line-height: 1.04;
 }
 
 /* Socials tile */
@@ -2857,5 +2877,137 @@
     background: none;
     color: var(--text);
     filter: none;
+  }
+}
+
+/* ── Portrait with iris-reveal swap ── */
+
+.pswap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--line-hi);
+  cursor: pointer;
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pswap-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+.pswap-base {
+  filter: contrast(1.06) saturate(1.05);
+  transition: transform 0.8s var(--ease-out), filter 0.5s ease;
+}
+
+/* The incoming portrait opens from the centre like an iris */
+.pswap-top {
+  clip-path: circle(0% at 50% 50%);
+  transform: scale(1.14);
+  transition: clip-path 0.62s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 0.85s var(--ease-out);
+}
+
+.pswap:hover .pswap-top,
+.pswap:focus-visible .pswap-top,
+.pswap.is-open .pswap-top {
+  clip-path: circle(78% at 50% 50%);
+  transform: scale(1);
+}
+
+.pswap:hover .pswap-base,
+.pswap:focus-visible .pswap-base,
+.pswap.is-open .pswap-base {
+  transform: scale(1.07);
+  filter: saturate(0.5) brightness(0.65);
+}
+
+/* Thin ring chasing the iris outward */
+.pswap-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 182, 39, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pswap:hover .pswap-ring,
+.pswap:focus-visible .pswap-ring,
+.pswap.is-open .pswap-ring {
+  animation: pswap-ring 0.62s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes pswap-ring {
+  0% {
+    opacity: 0.9;
+    width: 10px;
+    height: 10px;
+  }
+  100% {
+    opacity: 0;
+    width: 190%;
+    height: 190%;
+  }
+}
+
+/* Small affordance so people know it does something */
+.pswap-hint {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  z-index: 3;
+  padding: 3px 9px;
+  border-radius: var(--r-full);
+  background: rgba(10, 9, 12, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--line-hi);
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: opacity var(--t-base);
+  pointer-events: none;
+}
+
+.pswap:hover .pswap-hint,
+.pswap.is-open .pswap-hint {
+  opacity: 0;
+}
+
+.pswap:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pswap-top {
+    transition: opacity 0.3s ease;
+    clip-path: none;
+    transform: none;
+    opacity: 0;
+  }
+  .pswap:hover .pswap-top,
+  .pswap.is-open .pswap-top {
+    opacity: 1;
+    transform: none;
+  }
+  .pswap-ring {
+    display: none;
   }
 }

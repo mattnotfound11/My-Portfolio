@@ -2,6 +2,7 @@ import { PROFILE, TECH_COUNT, CERTIFICATES, STACK } from '../data';
 import { Reveal } from '../components/Reveal';
 import { Counter } from '../components/Motion';
 import { GithubActivity } from '../components/GithubActivity';
+import { ProfileSwap } from '../components/ProfileSwap';
 import { IconArrow, IconPin } from '../components/Icons';
 
 export function About() {
@@ -30,13 +31,12 @@ export function About() {
 
         <div className="bento">
           {/* Identity */}
-          <Reveal className="span-2 row-2">
+          <Reveal className="span-2">
             <article className="bento-card id-tile" style={{ height: '100%' }}>
-              <img
-                src="/assets/profile.jpg"
+              <ProfileSwap
+                base="/assets/profile.jpg"
+                hover="/assets/profile-hover.jpg"
                 alt={PROFILE.name}
-                className="id-photo"
-                loading="lazy"
               />
               <div className="id-copy">
                 <span className="eyebrow">A {PROFILE.roleShort}</span>
@@ -129,7 +129,7 @@ export function About() {
           </Reveal>
 
           {/* Live GitHub */}
-          <Reveal delay={0.24} className="span-2">
+          <Reveal delay={0.24} className="span-4">
             <GithubActivity />
           </Reveal>
 
