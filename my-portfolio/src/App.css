@@ -1679,13 +1679,8 @@
   font-size: clamp(3.4rem, 13vw, 9.5rem);
   font-weight: 700;
   font-style: italic;
-  color: #fff;
   line-height: 1;
   letter-spacing: -0.01em;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.18);
-  opacity: 0;
-  transform: translateY(14px) scale(0.97);
-  animation: sign-in 1.1s var(--ease-out) forwards;
 }
 
 @keyframes sign-in {
@@ -1700,9 +1695,20 @@
   font-size: 11px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--text-dim);
+}
+
+/* Wrapper owns the entrance; the child owns the shimmer. Keeping them on
+   one element makes animation-name collide and the text never fades in. */
+.intro-rise {
+  display: block;
   opacity: 0;
-  animation: sign-in 0.8s var(--ease-out) 0.55s forwards;
+  transform: translateY(14px) scale(0.985);
+  animation: sign-in 1.1s var(--ease-out) forwards;
+}
+
+.intro-rise--late {
+  animation-duration: 0.8s;
+  animation-delay: 0.55s;
 }
 
 .intro-count {
@@ -2797,4 +2803,59 @@
   gap: 10px;
   margin-top: auto;
   padding-top: 6px;
+}
+
+/* ── Text shimmer ── */
+
+/* A 200%-wide gradient clipped to the glyphs, scrolled left to right.
+   Colours come from the palette so it matches the rest of the site. */
+.shimmer {
+  display: inline-block;
+  background-image: linear-gradient(
+    110deg,
+    var(--text-dim) 30%,
+    #ffffff 50%,
+    var(--text-dim) 70%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation-name: shimmer-sweep;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: background-position;
+}
+
+@keyframes shimmer-sweep {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* Warm variant for the signature, tinted toward the site's amber */
+.shimmer--warm {
+  /* Base stays clearly legible; the sweep adds the highlight on top. */
+  background-image: linear-gradient(
+    110deg,
+    #b9b3c4 26%,
+    #ffffff 46%,
+    var(--amber) 56%,
+    #b9b3c4 72%
+  );
+  /* text-shadow paints behind transparent glyphs; drop-shadow follows the
+     clipped shape instead, so the glow survives background-clip: text. */
+  filter: drop-shadow(0 0 34px rgba(255, 255, 255, 0.18));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+    background: none;
+    color: var(--text);
+    filter: none;
+  }
 }

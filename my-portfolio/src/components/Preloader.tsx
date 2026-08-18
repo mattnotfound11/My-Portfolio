@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { TextShimmer } from './TextShimmer';
 
 const SEEN_KEY = 'mt-intro-seen';
 
@@ -35,8 +36,16 @@ export function Preloader({ onDone }: { onDone: () => void }) {
   return (
     <div className={`intro ${phase === 'out' ? 'is-out' : ''}`} aria-hidden="true">
       <div className="intro-inner">
-        <span className="intro-sign">Matthew</span>
-        <span className="intro-role">Software Developer &amp; Security Analyst</span>
+        <span className="intro-rise">
+          <TextShimmer className="intro-sign shimmer--warm" duration={2.8}>
+            Matthew
+          </TextShimmer>
+        </span>
+        <span className="intro-rise intro-rise--late">
+          <TextShimmer className="intro-role" duration={2.2}>
+            Software Developer &amp; Security Analyst
+          </TextShimmer>
+        </span>
       </div>
       <span className="intro-count" />
     </div>
