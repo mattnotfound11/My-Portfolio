@@ -584,13 +584,16 @@
 
 .bento-card {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
   border-radius: var(--r-lg);
   border: 1px solid var(--line);
   background: linear-gradient(160deg, var(--card-hi) 0%, var(--card) 100%);
   padding: 24px;
   overflow: hidden;
-  transition: border-color var(--t-base), transform var(--t-base),
-    background var(--t-base);
+  transition: border-color var(--t-base), transform var(--t-base);
 }
 
 .bento-card:hover {
@@ -640,14 +643,14 @@
 .id-copy {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
 }
 
 .id-name {
-  font-size: clamp(1.6rem, 2.4vw, 2.15rem);
+  font-size: clamp(1.45rem, 2.1vw, 1.85rem);
   font-weight: 800;
-  letter-spacing: -0.045em;
-  line-height: 1.04;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
   margin: 0;
 }
 
@@ -687,11 +690,11 @@
   display: block;
   margin-top: 8px;
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-dim);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 /* Live status tile */
@@ -761,10 +764,10 @@
 
 /* Full-width CTA band inside the bento */
 .cta-tile {
-  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 28px;
   flex-wrap: wrap;
   padding-block: 30px;
 }
@@ -3052,8 +3055,10 @@
   }
 }
 
+
+
 /* ═════════════════════════════════════════════
-   Portrait — cinematic charge & break reveal
+   Portrait — hover dissolves, click breaks through
    ═════════════════════════════════════════════ */
 
 .pswap {
@@ -3078,26 +3083,74 @@
   object-position: center 30%;
 }
 
-/* ── Base layer: drifts closer and drains of colour while charging ── */
+/* ── Photograph, waiting underneath ── */
 
-.pswap-base {
-  transition: transform calc(var(--charge) * 1s) linear,
-    filter calc(var(--charge) * 0.8s) ease;
+.pswap-under {
+  transform: scale(1.08);
+  filter: blur(7px) saturate(0.75) brightness(0.75);
+  transition: transform var(--dissolve) cubic-bezier(0.33, 0, 0.2, 1),
+    filter var(--dissolve) cubic-bezier(0.33, 0, 0.2, 1);
 }
 
-.pswap.is-charging .pswap-base {
-  transform: scale(1.13);
-  filter: saturate(0.35) contrast(1.28) brightness(0.72);
+/* ── Artwork on top ── */
+
+.pswap-cover {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+  transition: opacity calc(var(--dissolve) * 0.86) cubic-bezier(0.4, 0, 0.3, 1),
+    transform var(--dissolve) cubic-bezier(0.33, 0, 0.2, 1),
+    filter calc(var(--dissolve) * 0.7) ease-in;
 }
 
-.pswap.is-revealing .pswap-base,
-.pswap.is-revealed .pswap-base {
-  transform: scale(1.2);
-  filter: saturate(0) brightness(0.25);
-  transition: transform 0.9s var(--ease-out), filter 0.5s ease;
+/* ── Hover path: slow dissolve, fully reversible ──
+   Scoped away from the click states so the two never fight. */
+
+.pswap.is-idle:hover .pswap-under,
+.pswap.is-idle:focus-visible .pswap-under {
+  transform: scale(1);
+  filter: blur(0) saturate(1) brightness(1);
 }
 
-/* ── Chromatic ghosts: invisible until the break, then split and snap ── */
+.pswap.is-idle:hover .pswap-cover,
+.pswap.is-idle:focus-visible .pswap-cover {
+  opacity: 0;
+  transform: scale(1.14);
+  filter: blur(9px);
+}
+
+/* ── Click path: break through ── */
+
+.pswap.is-breaking .pswap-cover {
+  animation: cover-break 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cover-break {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.28); filter: blur(14px); }
+}
+
+.pswap.is-breaking .pswap-under {
+  animation: under-arrive 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes under-arrive {
+  0% { transform: scale(1.14); filter: blur(7px) saturate(0.75) brightness(0.75); clip-path: inset(48% 0 48% 0); }
+  100% { transform: scale(1); filter: blur(0) saturate(1) brightness(1); clip-path: inset(0 0 0 0); }
+}
+
+.pswap.is-revealed .pswap-cover {
+  opacity: 0;
+  transform: scale(1.28);
+  filter: blur(14px);
+}
+
+.pswap.is-revealed .pswap-under {
+  transform: scale(1);
+  filter: blur(0) saturate(1) brightness(1);
+}
+
+/* Chromatic split — only during the break */
 
 .pswap-ghost {
   opacity: 0;
@@ -3105,66 +3158,45 @@
   pointer-events: none;
 }
 
-.pswap-ghost--r {
-  filter: url(#none) sepia(1) saturate(6) hue-rotate(-50deg);
+.pswap-ghost--r { filter: sepia(1) saturate(6) hue-rotate(-50deg); }
+.pswap-ghost--c { filter: sepia(1) saturate(6) hue-rotate(140deg); }
+
+.pswap.is-breaking .pswap-ghost--r { animation: split-r 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.pswap.is-breaking .pswap-ghost--c { animation: split-c 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes split-r {
+  0% { opacity: 0.9; transform: translateX(24px) scale(1.1); }
+  100% { opacity: 0; transform: translateX(0) scale(1.28); }
+}
+@keyframes split-c {
+  0% { opacity: 0.9; transform: translateX(-24px) scale(1.1); }
+  100% { opacity: 0; transform: translateX(0) scale(1.28); }
 }
 
-.pswap-ghost--c {
-  filter: sepia(1) saturate(6) hue-rotate(140deg);
-}
+/* Flash at the moment of the break */
 
-.pswap.is-charging .pswap-ghost {
-  opacity: 0.16;
-  transition: opacity calc(var(--charge) * 1s) ease;
-}
-
-.pswap.is-charging .pswap-ghost--r {
-  transform: translateX(3px) scale(1.13);
-}
-.pswap.is-charging .pswap-ghost--c {
-  transform: translateX(-3px) scale(1.13);
-}
-
-.pswap.is-revealing .pswap-ghost--r {
-  animation: rgb-split-r 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.pswap.is-revealing .pswap-ghost--c {
-  animation: rgb-split-c 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes rgb-split-r {
-  0% { opacity: 0.85; transform: translateX(26px) scale(1.2); }
-  100% { opacity: 0; transform: translateX(0) scale(1.2); }
-}
-@keyframes rgb-split-c {
-  0% { opacity: 0.85; transform: translateX(-26px) scale(1.2); }
-  100% { opacity: 0; transform: translateX(0) scale(1.2); }
-}
-
-/* ── Incoming portrait ── */
-
-.pswap-top {
+.pswap-flash {
+  position: absolute;
+  inset: 0;
   opacity: 0;
-  transform: scale(1.16);
-  clip-path: inset(50% 0 50% 0);
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 45%, #fff 0%, rgba(255, 182, 39, 0.55) 38%, transparent 72%);
 }
 
-.pswap.is-revealing .pswap-top,
-.pswap.is-revealed .pswap-top {
-  opacity: 1;
-  transform: scale(1);
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.12s,
-    transform 1.25s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.25s ease 0.1s;
+.pswap.is-breaking .pswap-flash {
+  animation: flash-break 0.6s ease-out forwards;
 }
 
-/* ── Film grain, scanlines, vignette ── */
+@keyframes flash-break {
+  0% { opacity: 0; transform: scale(0.45); }
+  16% { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 0; transform: scale(1.45); }
+}
+
+/* Grain and vignette */
 
 .pswap-grain,
-.pswap-scan,
-.pswap-vignette,
-.pswap-flash {
+.pswap-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -3173,148 +3205,57 @@
 .pswap-grain {
   opacity: 0;
   mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-  transition: opacity 0.6s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  transition: opacity calc(var(--dissolve) * 0.5) ease;
 }
 
-.pswap.is-charging .pswap-grain {
-  opacity: 0.55;
-  animation: grain-jitter 0.45s steps(3) infinite;
+.pswap.is-idle:hover .pswap-grain,
+.pswap.is-breaking .pswap-grain {
+  opacity: 0.28;
+  animation: grain-jitter 0.5s steps(3) infinite;
 }
 
 @keyframes grain-jitter {
   0% { transform: translate(0, 0); }
-  33% { transform: translate(-3%, 2%); }
-  66% { transform: translate(2%, -3%); }
+  33% { transform: translate(-2%, 2%); }
+  66% { transform: translate(2%, -2%); }
   100% { transform: translate(0, 0); }
 }
 
-.pswap-scan {
-  opacity: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.05) 0px,
-    rgba(255, 255, 255, 0.05) 1px,
-    transparent 1px,
-    transparent 3px
-  );
-  transition: opacity 0.6s ease;
-}
-
-.pswap.is-charging .pswap-scan {
-  opacity: 1;
-  animation: scan-drift 5s linear infinite;
-}
-
-@keyframes scan-drift {
-  to { background-position: 0 -120px; }
-}
-
 .pswap-vignette {
-  opacity: 0;
-  background: radial-gradient(ellipse at center, transparent 42%, rgba(0, 0, 0, 0.75) 100%);
-  transition: opacity 0.7s ease;
+  background: radial-gradient(ellipse at center, transparent 46%, rgba(0, 0, 0, 0.55) 100%);
+  opacity: 0.7;
+  transition: opacity var(--dissolve) ease;
 }
 
-.pswap.is-charging .pswap-vignette,
-.pswap.is-revealing .pswap-vignette {
-  opacity: 1;
+.pswap.is-idle:hover .pswap-vignette,
+.pswap.is-revealed .pswap-vignette,
+.pswap.is-breaking .pswap-vignette {
+  opacity: 0.3;
 }
-
-.pswap.is-revealed .pswap-vignette {
-  opacity: 0.45;
-}
-
-/* ── The break ── */
-
-.pswap-flash {
-  opacity: 0;
-  background: radial-gradient(circle at 50% 45%, #fff 0%, rgba(255, 182, 39, 0.6) 38%, transparent 72%);
-}
-
-.pswap.is-revealing .pswap-flash {
-  animation: flash-break 0.7s ease-out forwards;
-}
-
-@keyframes flash-break {
-  0% { opacity: 0; transform: scale(0.4); }
-  14% { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 0; transform: scale(1.5); }
-}
-
-/* ── Charge ring ── */
-
-.pswap-ring {
-  position: absolute;
-  inset: 9px;
-  width: calc(100% - 18px);
-  height: calc(100% - 18px);
-  transform: rotate(-90deg);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  z-index: 3;
-}
-
-.pswap.is-charging .pswap-ring {
-  opacity: 1;
-}
-
-.pswap-ring circle {
-  fill: none;
-  stroke-width: 1.1;
-  vector-effect: non-scaling-stroke;
-}
-
-.pswap-ring-track {
-  stroke: rgba(255, 255, 255, 0.14);
-}
-
-.pswap-ring-fill {
-  stroke: var(--amber);
-  stroke-linecap: round;
-  stroke-dasharray: 289;
-  stroke-dashoffset: 289;
-  filter: drop-shadow(0 0 6px rgba(255, 182, 39, 0.8));
-}
-
-.pswap.is-charging .pswap-ring-fill {
-  animation: ring-charge var(--charge) linear forwards;
-}
-
-@keyframes ring-charge {
-  to { stroke-dashoffset: 0; }
-}
-
-/* ── Hint chip ── */
 
 .pswap-hint {
   position: absolute;
-  left: 50%;
-  bottom: 12px;
-  translate: -50% 0;
+  right: 10px;
+  bottom: 10px;
   z-index: 4;
-  padding: 5px 13px;
+  padding: 4px 11px;
   border-radius: var(--r-full);
-  background: rgba(10, 9, 12, 0.78);
+  background: rgba(10, 9, 12, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--line-hi);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8.5px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-dim);
   white-space: nowrap;
-  transition: opacity var(--t-base), color var(--t-base);
+  transition: opacity 0.5s ease;
 }
 
-.pswap.is-charging .pswap-hint {
-  color: var(--amber);
-  border-color: var(--line-amber);
-}
-
-.pswap.is-revealing .pswap-hint {
+.pswap.is-idle:hover .pswap-hint,
+.pswap.is-breaking .pswap-hint {
   opacity: 0;
 }
 
@@ -3323,25 +3264,171 @@
   outline-offset: 3px;
 }
 
-/* Motion-sensitive visitors get a plain cross-fade on click, no build-up */
 @media (prefers-reduced-motion: reduce) {
   .pswap-grain,
-  .pswap-scan,
-  .pswap-ring,
   .pswap-flash,
   .pswap-ghost {
     display: none;
   }
-  .pswap-base,
-  .pswap-top {
+  .pswap-under,
+  .pswap-cover {
     transition: opacity 0.3s ease !important;
     transform: none !important;
     filter: none !important;
     clip-path: none !important;
     animation: none !important;
   }
-  .pswap.is-revealing .pswap-top,
-  .pswap.is-revealed .pswap-top {
-    opacity: 1;
+}
+
+/* ── About tiles: shared alignment primitives ── */
+
+/* Every tile opens with a head row, so eyebrows line up across the grid.
+   Default is left-aligned; --split is for heads that carry a trailing link. */
+.tile-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 18px;
+}
+
+.tile-head--split {
+  justify-content: space-between;
+}
+
+.eyebrow--mint {
+  color: var(--mint);
+}
+
+/* Content block that takes the slack, keeping the meta row pinned low */
+.tile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tile-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.tile-meta svg {
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+/* Text link in a tile head, replacing the floating corner arrow */
+.tile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color var(--t-fast);
+  white-space: nowrap;
+}
+
+.tile-link:hover {
+  color: var(--amber);
+}
+
+.tile-link svg {
+  transition: transform var(--t-fast);
+}
+
+.tile-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.cta-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Stats sit centred in their own frames */
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 18px 10px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.stat-row {
+  align-items: stretch;
+}
+
+/* Portrait tile keeps the photo flush and the copy breathing under it */
+.id-tile {
+  gap: 20px;
+  padding: 20px;
+}
+
+.id-tile .pswap {
+  width: 100%;
+  flex: none;
+}
+
+/* Compact secondary list inside a tile */
+.mini-list {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.mini-row {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.mini-dot {
+  width: 4px;
+  height: 4px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #a992ff;
+  translate: 0 -2px;
+}
+
+.mini-name {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  line-height: 1.45;
+}
+
+.mini-org {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.tile-meta--inline {
+  margin-top: 6px;
+}
+
+@media (max-width: 640px) {
+  .mini-org {
+    display: none;
   }
 }

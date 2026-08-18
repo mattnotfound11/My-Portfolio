@@ -1,9 +1,15 @@
-import { PROFILE, TECH_COUNT, CERTIFICATES, STACK } from '../data';
+import { PROFILE, TECH_COUNT, CERTIFICATES, STACK, LEARNING } from '../data';
 import { Reveal } from '../components/Reveal';
 import { Counter } from '../components/Motion';
 import { GithubActivity } from '../components/GithubActivity';
 import { ProfileSwap } from '../components/ProfileSwap';
 import { IconArrow, IconPin } from '../components/Icons';
+
+const STATS = [
+  { value: '800+', label: 'Students served' },
+  { value: String(TECH_COUNT), label: 'Technologies' },
+  { value: String(CERTIFICATES.length).padStart(2, '0'), label: 'Credentials' },
+];
 
 export function About() {
   return (
@@ -30,20 +36,18 @@ export function About() {
         </div>
 
         <div className="bento">
-          {/* Identity */}
+          {/* Portrait + identity */}
           <Reveal className="span-2 row-2">
-            <article className="bento-card id-tile" style={{ height: '100%' }}>
+            <article className="bento-card id-tile">
               <ProfileSwap
-                base="/assets/profile.jpg"
-                hover="/assets/profile-hover.jpg"
+                base="/assets/profile-hover.jpg"
+                cover="/assets/profile.jpg"
                 alt={PROFILE.name}
               />
               <div className="id-copy">
                 <span className="eyebrow">A {PROFILE.roleShort}</span>
                 <h3 className="id-name">
-                  {PROFILE.first}
-                  <br />
-                  {PROFILE.last}.
+                  {PROFILE.first} {PROFILE.last}
                 </h3>
                 <p className="id-blurb">{PROFILE.blurb}</p>
               </div>
@@ -52,69 +56,65 @@ export function About() {
 
           {/* Study status */}
           <Reveal delay={0.06} className="span-2">
-            <article className="bento-card" style={{ height: '100%' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  marginBottom: 14,
-                }}
-              >
+            <article className="bento-card">
+              <div className="tile-head">
                 <span className="live-dot" />
-                <span className="eyebrow" style={{ color: 'var(--mint)' }}>
-                  Currently studying
-                </span>
+                <span className="eyebrow eyebrow--mint">Currently studying</span>
               </div>
-              <p className="tile-big">{PROFILE.year}</p>
-              <p className="tile-headline">{PROFILE.program}</p>
-              <p
-                className="id-blurb"
-                style={{ marginTop: 8, display: 'flex', gap: 6 }}
-              >
-                <IconPin width={16} height={16} style={{ marginTop: 3 }} />
-                {PROFILE.school}
-              </p>
+
+              <div className="tile-body">
+                <p className="tile-big">{PROFILE.year}</p>
+                <p className="tile-headline">{PROFILE.program}</p>
+                <p className="tile-meta tile-meta--inline">
+                  <IconPin width={15} height={15} />
+                  {PROFILE.school}
+                </p>
+              </div>
+
+              <div className="mini-list">
+                <span className="eyebrow">Alongside</span>
+                {LEARNING.map((l) => (
+                  <div className="mini-row" key={l.id}>
+                    <span className="mini-dot" />
+                    <span className="mini-name">{l.name}</span>
+                    <span className="mini-org">{l.issuer}</span>
+                  </div>
+                ))}
+              </div>
             </article>
           </Reveal>
 
-          {/* Stats */}
+          {/* Numbers */}
           <Reveal delay={0.12} className="span-2">
-            <article className="bento-card" style={{ height: '100%' }}>
-              <span className="eyebrow">By the numbers</span>
-              <div className="stat-row" style={{ marginTop: 16 }}>
-                <div className="stat">
-                  <span className="stat-num"><Counter value="800+" /></span>
-                  <span className="stat-label">
-                    Students
-                    <br />
-                    served
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat-num"><Counter value={String(TECH_COUNT)} /></span>
-                  <span className="stat-label">
-                    Tech
-                    <br />
-                    stack
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat-num">
-                    <Counter value={String(CERTIFICATES.length).padStart(2, '0')} />
-                  </span>
-                  <span className="stat-label">
-                    Creden&shy;tials
-                  </span>
-                </div>
+            <article className="bento-card">
+              <div className="tile-head">
+                <span className="eyebrow">By the numbers</span>
+              </div>
+
+              <div className="stat-row">
+                {STATS.map((s) => (
+                  <div className="stat" key={s.label}>
+                    <span className="stat-num">
+                      <Counter value={s.value} />
+                    </span>
+                    <span className="stat-label">{s.label}</span>
+                  </div>
+                ))}
               </div>
             </article>
           </Reveal>
 
           {/* Disciplines */}
           <Reveal delay={0.18} className="span-4">
-            <article className="bento-card" style={{ height: '100%' }}>
-              <span className="eyebrow">What I work across</span>
+            <article className="bento-card">
+              <div className="tile-head tile-head--split">
+                <span className="eyebrow">What I work across</span>
+                <a href="#stack" className="tile-link">
+                  Full stack
+                  <IconArrow width={13} height={13} />
+                </a>
+              </div>
+
               <div className="chip-cloud">
                 {STACK.map((g) => (
                   <span className="chip" key={g.id}>
@@ -122,9 +122,6 @@ export function About() {
                   </span>
                 ))}
               </div>
-              <a href="#stack" className="tile-arrow" aria-label="See full stack">
-                <IconArrow width={15} height={15} />
-              </a>
             </article>
           </Reveal>
 
@@ -133,11 +130,11 @@ export function About() {
             <GithubActivity />
           </Reveal>
 
-          {/* CTA — full-width closing band */}
+          {/* Closing band */}
           <Reveal delay={0.3} className="span-4">
             <article className="bento-card cta-tile">
-              <div>
-                <h3 className="tile-big" style={{ marginBottom: 8 }}>
+              <div className="cta-copy">
+                <h3 className="tile-big">
                   Let's build{' '}
                   <span className="tone-serif tone-amber">something.</span>
                 </h3>

@@ -1,79 +1,54 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface Props {
+  /** Photograph. Sits underneath and is revealed. */
   base: string;
-  hover: string;
+  /** Artwork. Sits on top and dissolves away. */
+  cover: string;
   alt: string;
-  /** Seconds of hold before the reveal fires. */
-  charge?: number;
+  /** Seconds for the hover dissolve. */
+  duration?: number;
 }
 
-type Phase = 'idle' | 'charging' | 'revealing' | 'revealed';
+type Phase = 'idle' | 'breaking' | 'revealed';
 
 /**
- * Cinematic portrait reveal.
+ * Two ways into the same photograph.
  *
- * Hold the portrait and it "charges": grain and scanlines creep in, the image
- * drifts closer, and a ring fills to show how long is left. At full charge it
- * breaks — a white flash, an RGB split that snaps back into focus, and the
- * second portrait resolves through it.
- *
- * Leaving before full charge cancels and rewinds. Clicking skips the wait.
+ * Hovering slowly dissolves the artwork so the photo behind it drifts into
+ * focus — and rewinds the moment you leave, since that path is pure CSS
+ * transitions. Clicking skips the gradual route and breaks through instead:
+ * a flash, a chromatic split, and the photo wiping open. Clicking again
+ * puts the artwork back.
  */
-export function ProfileSwap({ base, hover, alt, charge = 5 }: Props) {
+export function ProfileSwap({ base, cover, alt, duration = 3.2 }: Props) {
   const [phase, setPhase] = useState<Phase>('idle');
-  const [hasHover, setHasHover] = useState(true);
-  const timers = useRef<number[]>([]);
+  const [hasCover, setHasCover] = useState(true);
+  const timer = useRef<number | null>(null);
 
-  const clear = () => {
-    timers.current.forEach(clearTimeout);
-    timers.current = [];
-  };
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
 
-  useEffect(() => clear, []);
+  const toggle = useCallback(() => {
+    if (!hasCover) return;
+    if (timer.current) clearTimeout(timer.current);
 
-  const fire = useCallback(() => {
-    clear();
-    setPhase('revealing');
-    // Flash + RGB split settle, then hold on the second portrait.
-    timers.current.push(window.setTimeout(() => setPhase('revealed'), 1150));
-  }, []);
-
-  const start = () => {
-    if (!hasHover || phase === 'revealed' || phase === 'revealing') return;
-    setPhase('charging');
-    timers.current.push(window.setTimeout(fire, charge * 1000));
-  };
-
-  const stop = () => {
-    if (phase === 'charging') {
-      clear();
-      setPhase('idle');
-    }
-  };
-
-  const toggle = () => {
-    if (!hasHover) return;
-    if (phase === 'revealed') {
-      clear();
-      setPhase('idle');
-    } else {
-      fire(); // click skips the charge
-    }
-  };
-
-  const reduced =
-    typeof window !== 'undefined' &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setPhase((p) => {
+      if (p === 'revealed') return 'idle';
+      // Fires immediately — no wait before the break.
+      timer.current = window.setTimeout(() => setPhase('revealed'), 1100);
+      return 'breaking';
+    });
+  }, [hasCover]);
 
   return (
     <div
       className={`pswap is-${phase}`}
-      style={{ ['--charge' as string]: `${charge}s` }}
-      onMouseEnter={reduced ? undefined : start}
-      onMouseLeave={reduced ? undefined : stop}
-      onFocus={reduced ? undefined : start}
-      onBlur={stop}
+      style={{ ['--dissolve' as string]: `${duration}s` }}
       onClick={toggle}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -83,37 +58,29 @@ export function ProfileSwap({ base, hover, alt, charge = 5 }: Props) {
       }}
       role="button"
       tabIndex={0}
-      aria-label={`${alt} — hold or activate to reveal the photo`}
+      aria-label={`${alt} — hover to fade through, or activate to reveal the photograph`}
     >
-      <img className="pswap-img pswap-base" src={base} alt={alt} />
+      <img className="pswap-img pswap-under" src={base} alt={alt} />
 
-      {hasHover && (
+      {hasCover && (
         <>
-          {/* Duplicated layers, offset and blended, make the RGB split */}
-          <img className="pswap-img pswap-ghost pswap-ghost--r" src={base} alt="" aria-hidden="true" />
-          <img className="pswap-img pswap-ghost pswap-ghost--c" src={base} alt="" aria-hidden="true" />
-
           <img
-            className="pswap-img pswap-top"
-            src={hover}
+            className="pswap-img pswap-cover"
+            src={cover}
             alt=""
             aria-hidden="true"
-            onError={() => setHasHover(false)}
+            onError={() => setHasCover(false)}
           />
 
+          {/* Offset copies of the artwork; only visible during the break */}
+          <img className="pswap-img pswap-ghost pswap-ghost--r" src={cover} alt="" aria-hidden="true" />
+          <img className="pswap-img pswap-ghost pswap-ghost--c" src={cover} alt="" aria-hidden="true" />
+
           <span className="pswap-grain" aria-hidden="true" />
-          <span className="pswap-scan" aria-hidden="true" />
           <span className="pswap-flash" aria-hidden="true" />
           <span className="pswap-vignette" aria-hidden="true" />
-
-          {/* Charge indicator — without it nobody knows to keep holding */}
-          <svg className="pswap-ring" viewBox="0 0 100 100" aria-hidden="true">
-            <circle className="pswap-ring-track" cx="50" cy="50" r="46" />
-            <circle className="pswap-ring-fill" cx="50" cy="50" r="46" />
-          </svg>
-
           <span className="pswap-hint" aria-hidden="true">
-            {phase === 'charging' ? 'hold…' : phase === 'revealed' ? 'click to reset' : 'hold to reveal'}
+            {phase === 'revealed' ? 'click to reset' : 'hover · click'}
           </span>
         </>
       )}
