@@ -582,6 +582,14 @@
   align-items: stretch;
 }
 
+/* Grid and flex children default to min-width:auto, so a wide child (the
+   contribution SVG) can push the whole page wider than the viewport.
+   Zeroing it lets the inner scroller contain the overflow instead. */
+.bento > *,
+.bento-card {
+  min-width: 0;
+}
+
 .bento-card {
   position: relative;
   display: flex;
@@ -3430,5 +3438,169 @@
 @media (max-width: 640px) {
   .mini-org {
     display: none;
+  }
+}
+
+/* ── GitHub contribution calendar ── */
+
+.ghcal {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  /* Flex items default to min-width:auto, which lets the wide SVG push the
+     card wider than the page. Zero lets the scroller do its job. */
+  min-width: 0;
+  max-width: 100%;
+  border-radius: var(--r-md);
+  transition: background var(--t-base);
+}
+
+.ghcal.is-game {
+  background: #000;
+  outline: 1px solid var(--line-hi);
+  outline-offset: 8px;
+}
+
+.ghcal-scroll {
+  position: relative;
+  overflow-x: auto;
+  min-width: 0;
+  max-width: 100%;
+  scrollbar-width: none;
+}
+
+.ghcal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.ghcal-svg {
+  overflow: visible;
+  display: block;
+  /* Keep the intrinsic width: without this the SVG is squeezed to the
+     container on narrow screens and every cell is crushed. Let the
+     wrapper scroll instead. */
+  flex: none;
+  min-width: max-content;
+  max-width: none;
+}
+
+.ghcal-month {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  fill: var(--text-dim);
+}
+
+.ghcal-cell {
+  transition: opacity 0.12s linear;
+}
+
+.ghcal-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ghcal-tip {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, calc(-100% - 7px));
+  padding: 5px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--line-hi);
+  background: rgba(10, 9, 12, 0.95);
+  font-size: 11px;
+  color: var(--text-soft);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ghcal-foot {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ghcal-legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Game-mode switch */
+.ghcal-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding-left: 16px;
+  border-left: 1px solid var(--line);
+}
+
+.ghcal-knob {
+  position: relative;
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background var(--t-fast);
+}
+
+.ghcal-knob::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--t-fast);
+}
+
+.ghcal-toggle.is-on .ghcal-knob {
+  background: #26a641;
+}
+
+.ghcal-toggle.is-on .ghcal-knob::after {
+  transform: translateX(14px);
+}
+
+.ghcal-toggle-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.ghcal-toggle:hover .ghcal-toggle-label {
+  color: var(--text-soft);
+}
+
+.ghcal-stats {
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.ghcal-stats strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .ghcal-stats {
+    margin-left: 0;
+    width: 100%;
   }
 }

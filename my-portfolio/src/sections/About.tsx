@@ -1,7 +1,7 @@
 import { PROFILE, TECH_COUNT, CERTIFICATES, STACK, LEARNING } from '../data';
 import { Reveal } from '../components/Reveal';
 import { Counter } from '../components/Motion';
-import { GithubActivity } from '../components/GithubActivity';
+import { GithubCalendar } from '../components/GithubCalendar';
 import { ProfileSwap } from '../components/ProfileSwap';
 import { IconArrow, IconPin } from '../components/Icons';
 
@@ -125,9 +125,23 @@ export function About() {
             </article>
           </Reveal>
 
-          {/* Live GitHub */}
+          {/* GitHub contribution calendar */}
           <Reveal delay={0.24} className="span-4">
-            <GithubActivity />
+            <article className="bento-card">
+              <div className="tile-head tile-head--split">
+                <span className="eyebrow">Contribution activity</span>
+                <a
+                  href={PROFILE.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tile-link"
+                >
+                  @{PROFILE.githubHandle}
+                  <IconArrow width={13} height={13} />
+                </a>
+              </div>
+              <GithubCalendar username={PROFILE.githubHandle} />
+            </article>
           </Reveal>
 
           {/* Closing band */}
