@@ -1048,6 +1048,63 @@
   letter-spacing: -0.02em;
 }
 
+/* Contribution callout. Amber rule ties it to the section accent and sets it
+   apart from the product copy that follows. */
+.work-role {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--amber);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.work-role-tag {
+  flex: none;
+  margin-top: 2px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(245, 183, 49, 0.12);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.work-role-name {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.work-role-note {
+  margin-top: 3px;
+  max-width: 58ch;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.work-stack {
+  margin-top: 22px;
+}
+
+.work-stack .chip-cloud {
+  margin-top: 10px;
+}
+
+@media (max-width: 560px) {
+  .work-role {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 .work-desc {
   color: var(--text-muted);
   margin-top: 16px;
@@ -2045,9 +2102,6 @@
 .dock-left {
   left: 26px;
 }
-.dock-right {
-  right: 26px;
-}
 
 .dock-caret {
   font-family: var(--font-mono);
@@ -2145,9 +2199,6 @@
   }
   .dock-left {
     left: 18px;
-  }
-  .dock-right {
-    right: 18px;
   }
   .term {
     left: 18px;
@@ -2503,251 +2554,6 @@
   }
 }
 
-/* ── Hardcoded chat assistant ── */
-
-.chat {
-  position: fixed;
-  right: 26px;
-  bottom: 88px;
-  z-index: 130;
-  display: flex;
-  flex-direction: column;
-  width: min(370px, calc(100vw - 52px));
-  height: min(520px, calc(100vh - 140px));
-  border-radius: var(--r-lg);
-  border: 1px solid var(--line-hi);
-  background: rgba(14, 13, 17, 0.97);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.62);
-  overflow: hidden;
-  animation: term-in 0.3s var(--ease-out);
-}
-
-.chat-head {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 14px 15px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.chat-avatar {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: linear-gradient(145deg, var(--amber), var(--amber-deep));
-  color: #1a1200;
-  font-weight: 800;
-  font-size: 12px;
-  letter-spacing: -0.03em;
-}
-
-.chat-name {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-.chat-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-top: 2px;
-}
-
-.chat-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--mint);
-  box-shadow: 0 0 7px var(--mint);
-}
-
-.chat-x {
-  margin-left: auto;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--text-dim);
-  transition: all var(--t-fast);
-}
-
-.chat-x:hover {
-  background: rgba(255, 255, 255, 0.07);
-  color: var(--text);
-}
-
-.chat-log {
-  flex: 1;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 16px 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.bubble {
-  max-width: 88%;
-  padding: 11px 14px;
-  border-radius: 14px;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  white-space: pre-line;
-  animation: bubble-in 0.26s var(--ease-out);
-}
-
-@keyframes bubble-in {
-  from {
-    opacity: 0;
-    transform: translateY(7px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.bubble--bot {
-  align-self: flex-start;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.045);
-  color: var(--text-soft);
-  border-bottom-left-radius: 5px;
-}
-
-.bubble--me {
-  align-self: flex-end;
-  background: var(--amber);
-  color: #1a1200;
-  font-weight: 500;
-  border-bottom-right-radius: 5px;
-}
-
-.bubble--typing {
-  display: flex;
-  gap: 4px;
-  padding: 14px;
-}
-
-.bubble--typing span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-dim);
-  animation: dot 1.1s infinite;
-}
-
-.bubble--typing span:nth-child(2) {
-  animation-delay: 0.16s;
-}
-.bubble--typing span:nth-child(3) {
-  animation-delay: 0.32s;
-}
-
-@keyframes dot {
-  0%,
-  60%,
-  100% {
-    opacity: 0.25;
-    transform: translateY(0);
-  }
-  30% {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
-}
-
-.chat-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-top: 6px;
-}
-
-.chat-chip {
-  padding: 8px 13px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--line-hi);
-  background: rgba(255, 255, 255, 0.03);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  transition: all var(--t-fast);
-}
-
-.chat-chip:hover {
-  border-color: var(--line-amber);
-  color: var(--amber);
-  background: rgba(255, 182, 39, 0.07);
-}
-
-.chat-form {
-  display: flex;
-  gap: 8px;
-  padding: 12px;
-  border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.chat-form input {
-  flex: 1;
-  min-width: 0;
-  padding: 11px 14px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
-  font-size: 0.85rem;
-  color: var(--text);
-  outline: none;
-  transition: border-color var(--t-fast);
-}
-
-.chat-form input::placeholder {
-  color: var(--text-dim);
-}
-
-.chat-form input:focus {
-  border-color: var(--line-amber);
-}
-
-.chat-form button {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--amber);
-  color: #1a1200;
-  transition: all var(--t-fast);
-}
-
-.chat-form button:hover {
-  background: #ffc44d;
-  transform: scale(1.05);
-}
-
-@media (max-width: 620px) {
-  .chat {
-    right: 18px;
-    bottom: 72px;
-    height: min(460px, calc(100vh - 120px));
-  }
-}
-
 /* ── Currently studying (in progress, not yet earned) ── */
 
 .learn-strip {
@@ -2827,10 +2633,19 @@
   border-top: 1px solid var(--line);
 }
 
+/* Two columns rather than auto-fit: at three across, a fourth build sat alone
+   on its own row beside two empty cells. An even pair-per-row packs whatever
+   count is in BUILDING, and the wider card suits the 1300x812 shots. */
 .build-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
+}
+
+@media (max-width: 780px) {
+  .build-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .build-card {

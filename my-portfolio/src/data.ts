@@ -120,8 +120,12 @@ export type Project = {
   live: string;
   summary: string;
   detail: string;
+  /** What I actually did here, kept separate from what the product does. */
+  role: string;
+  roleNote: string;
   metrics: { value: string; label: string }[];
   features: { title: string; body: string }[];
+  /** The product's stack, not a claim about my own contribution. */
   stack: string[];
 };
 
@@ -163,6 +167,9 @@ export const PROJECTS: Project[] = [
       'No clipboards, no manual rollcalls. Students scan in seconds — facilitators see who is present, late, or absent in real time.',
     detail:
       'PHARMATRACK replaces paper attendance sheets for the University of San Agustin Pharmacy Department. Students register once with their USA student ID to receive a permanent personal QR code, then present it at any event to be logged in under a second. Facilitators watch scans land on a live dashboard and export per-event or per-student reports in one click.',
+    role: 'UI/UX Design',
+    roleNote:
+      'I designed the interface and the user flows — the screens in the deck above, and the path a student takes from registering to being scanned in.',
     metrics: [
       { value: '800+', label: 'Students' },
       { value: '<1s', label: 'Scan time' },
@@ -246,6 +253,17 @@ export const BUILDING: Building[] = [
     blurb:
       'Catalog and booking site for a UV marble, PVC ceiling, fluted panel, and WPC decking supplier in Irisan, Baguio City. Priced materials catalog, project gallery, and a consultation booking form that degrades honestly when email delivery is not configured.',
     stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Resend'],
+  },
+  {
+    id: 'locket',
+    name: 'Locket',
+    kind: 'Bakery storefront',
+    image: '/assets/projects/locket.jpg',
+    live: 'https://locket-bakes.vercel.app',
+    repo: 'https://github.com/mattnotfound11/Locket',
+    blurb:
+      'Storefront and ordering system for a bakery in Jaro, Iloilo City. Product catalog with allergen and nutrition panels, a pickup-slot picker, custom cake orders, and order tracking by reference. Pricing runs on integer centavos, and the business rules sit outside React so they can be tested without a browser.',
+    stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Vitest'],
   },
 ];
 

@@ -50,6 +50,16 @@ export function Work() {
                 <h3 className="work-title">{project.title}</h3>
                 <p className="work-tagline">{project.tagline}</p>
 
+                {/* My contribution, stated before the product description so
+                    the stack below is never read as a personal skill claim. */}
+                <div className="work-role">
+                  <span className="work-role-tag">My role</span>
+                  <div>
+                    <p className="work-role-name">{project.role}</p>
+                    <p className="work-role-note">{project.roleNote}</p>
+                  </div>
+                </div>
+
                 <div className="work-split">
                   <div className="work-col">
                     <p className="work-desc">{project.detail}</p>
@@ -63,12 +73,15 @@ export function Work() {
                       ))}
                     </div>
 
-                    <div className="chip-cloud">
-                      {project.stack.map((tech) => (
-                        <span className="chip" key={tech}>
-                          {tech}
-                        </span>
-                      ))}
+                    <div className="work-stack">
+                      <span className="eyebrow">Project stack</span>
+                      <div className="chip-cloud">
+                        {project.stack.map((tech) => (
+                          <span className="chip" key={tech}>
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="work-actions">
