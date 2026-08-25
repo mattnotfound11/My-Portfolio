@@ -20,7 +20,7 @@ export const PROFILE = {
   program: 'BS Information Technology',
   year: '3rd Year',
   blurb:
-    'Third-year Information Technology student at the University of San Agustin. I build web applications that solve concrete problems, and I care about the security of what I ship — starting with attendance for 800+ pharmacy students.',
+    "Third-year BS Information Technology student at the University of San Agustin. I build web applications that solve concrete problems, with a focus on security in everything I ship. I create websites as a way to sharpen my skills and deepen my technical knowledge, and I'm driven to apply what I learn toward a future career in the field.",
 } as const;
 
 /* ── Tech stack, grouped ───────────────────────────────── */
@@ -115,7 +115,8 @@ export type Project = {
   title: string;
   tagline: string;
   category: string;
-  image: string;
+  /** Real screens from the live site, shown in the coverflow carousel. */
+  shots: { src: string; alt: string; title: string; subtitle: string }[];
   live: string;
   summary: string;
   detail: string;
@@ -131,7 +132,32 @@ export const PROJECTS: Project[] = [
     title: 'PHARMATRACK',
     tagline: 'QR attendance, done right.',
     category: 'Web Application',
-    image: '/assets/pharmatrack.png',
+    shots: [
+      {
+        src: '/assets/pharmatrack/01-landing.jpg',
+        alt: 'PHARMATRACK landing page with the QR attendance headline',
+        title: 'Landing',
+        subtitle: 'Public entry point',
+      },
+      {
+        src: '/assets/pharmatrack/02-flow.jpg',
+        alt: 'Register, scan and track steps beside the key features panel',
+        title: 'How it works',
+        subtitle: 'Register → Scan → Track',
+      },
+      {
+        src: '/assets/pharmatrack/03-register.jpg',
+        alt: 'Student and facilitator registration form',
+        title: 'Create account',
+        subtitle: 'Student or facilitator',
+      },
+      {
+        src: '/assets/pharmatrack/04-login.jpg',
+        alt: 'PHARMATRACK secure log in screen',
+        title: 'Secure log in',
+        subtitle: 'USA email accounts',
+      },
+    ],
     live: 'https://lsgph-pharmatrack.com/',
     summary:
       'No clipboards, no manual rollcalls. Students scan in seconds — facilitators see who is present, late, or absent in real time.',
@@ -209,6 +235,17 @@ export const BUILDING: Building[] = [
     blurb:
       'Booking site for a Gyeon-certified detailing studio. Tiered service packages with pricing, an appointment flow, photo gallery, and a scripted assistant that answers questions on services and booking.',
     stack: ['React', 'TypeScript', 'React Router', 'Vite', 'Tailwind CSS'],
+  },
+  {
+    id: 'decoforge',
+    name: 'Decoforge Baguio',
+    kind: 'Interior finishes supplier',
+    image: '/assets/projects/decoforge.jpg',
+    live: 'https://decoforge-baguio.vercel.app',
+    repo: 'https://github.com/mattnotfound11/Decoforge-Baguio',
+    blurb:
+      'Catalog and booking site for a UV marble, PVC ceiling, fluted panel, and WPC decking supplier in Irisan, Baguio City. Priced materials catalog, project gallery, and a consultation booking form that degrades honestly when email delivery is not configured.',
+    stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Resend'],
   },
 ];
 

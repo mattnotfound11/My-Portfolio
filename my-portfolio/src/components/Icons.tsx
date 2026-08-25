@@ -134,6 +134,18 @@ export const IconChevronDown = (p: P) => (
   </svg>
 );
 
+export const IconChevronLeft = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="m15 6-6 6 6 6" />
+  </svg>
+);
+
+export const IconChevronRight = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="m9 6 6 6-6 6" />
+  </svg>
+);
+
 export const IconCheck = (p: P) => (
   <svg {...base} {...p}>
     <circle cx="12" cy="12" r="9" />

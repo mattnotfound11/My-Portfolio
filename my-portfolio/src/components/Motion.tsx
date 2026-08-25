@@ -83,47 +83,6 @@ export function ScrollProgress() {
   return <div className="scroll-progress" ref={ref} />;
 }
 
-/* ── Number that counts up when scrolled into view ──────── */
-
-export function Counter({
-  value,
-  duration = 1400,
-}: {
-  value: string;
-  duration?: number;
-}) {
-  const { ref, inView } = useInView<HTMLSpanElement>(0.4);
-  const [shown, setShown] = useState(value);
-
-  // Split "800+" into 800 and "+" so only the digits animate.
-  const digits = parseFloat(value.replace(/[^\d.]/g, ''));
-  const suffix = value.replace(/[\d.,]/g, '');
-  const pad = /^0\d/.test(value);
-
-  useEffect(() => {
-    if (!inView || Number.isNaN(digits)) return;
-    if (reduced()) {
-      setShown(value);
-      return;
-    }
-
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min((now - start) / duration, 1);
-      // easeOutExpo
-      const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-      const n = Math.round(digits * eased);
-      setShown((pad ? String(n).padStart(2, '0') : String(n)) + suffix);
-      if (t < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, digits, suffix, duration, value, pad]);
-
-  return <span ref={ref}>{Number.isNaN(digits) ? value : shown}</span>;
-}
-
 /* ── Headline that reveals word by word ─────────────────── */
 
 export function SplitText({

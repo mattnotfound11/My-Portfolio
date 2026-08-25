@@ -1,5 +1,6 @@
 import { PROJECTS, BUILDING } from '../data';
 import { Reveal } from '../components/Reveal';
+import { CoverflowCarousel } from '../components/CoverflowCarousel';
 import { IconArrow, IconGithub } from '../components/Icons';
 
 export function Work() {
@@ -29,13 +30,17 @@ export function Work() {
         {PROJECTS.map((project) => (
           <Reveal key={project.id} delay={0.1}>
             <article className="work-card">
-              <div className="work-shot">
-                <img
-                  src={project.image}
-                  alt={`${project.title} interface`}
-                  loading="lazy"
-                />
-              </div>
+              {/* Real screens from the live site. Drag, arrow keys, or the
+                  chevrons — the deck stays compact whatever the viewport. */}
+              <CoverflowCarousel
+                slides={project.shots}
+                label={`${project.title} screens`}
+                className="work-deck"
+                cardWidth="clamp(150px, 19vw, 236px)"
+                showCaption
+                showNavigation
+                showPagination
+              />
 
               <div className="work-body">
                 <div className="work-head">
@@ -44,44 +49,49 @@ export function Work() {
                 </div>
                 <h3 className="work-title">{project.title}</h3>
                 <p className="work-tagline">{project.tagline}</p>
-                <p className="work-desc">{project.detail}</p>
 
-                <div className="work-metrics">
-                  {project.metrics.map((m) => (
-                    <span className="metric" key={m.label}>
-                      <b>{m.value}</b>
-                      <span>{m.label}</span>
-                    </span>
-                  ))}
-                </div>
+                <div className="work-split">
+                  <div className="work-col">
+                    <p className="work-desc">{project.detail}</p>
 
-                <div className="feature-grid">
-                  {project.features.map((f) => (
-                    <div className="feature-item" key={f.title}>
-                      <h4>{f.title}</h4>
-                      <p>{f.body}</p>
+                    <div className="work-metrics">
+                      {project.metrics.map((m) => (
+                        <span className="metric" key={m.label}>
+                          <b>{m.value}</b>
+                          <span>{m.label}</span>
+                        </span>
+                      ))}
                     </div>
-                  ))}
-                </div>
 
-                <div className="chip-cloud" style={{ marginTop: 22 }}>
-                  {project.stack.map((tech) => (
-                    <span className="chip" key={tech}>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                    <div className="chip-cloud">
+                      {project.stack.map((tech) => (
+                        <span className="chip" key={tech}>
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
 
-                <div className="work-actions">
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary"
-                  >
-                    Visit live site
-                    <IconArrow width={16} height={16} />
-                  </a>
+                    <div className="work-actions">
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-primary"
+                      >
+                        Visit live site
+                        <IconArrow width={16} height={16} />
+                      </a>
+                    </div>
+                  </div>
+
+                  <ul className="feature-list">
+                    {project.features.map((f) => (
+                      <li className="feature-row" key={f.title}>
+                        <h4>{f.title}</h4>
+                        <p>{f.body}</p>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </article>
@@ -104,7 +114,7 @@ export function Work() {
             </Reveal>
             <Reveal delay={0.14}>
               <p className="sec-sub">
-                Both are deployed and usable today, and both are still being
+                Each one is deployed and usable today, and each is still being
                 worked on — so treat them as work in motion rather than finished
                 case studies.
               </p>

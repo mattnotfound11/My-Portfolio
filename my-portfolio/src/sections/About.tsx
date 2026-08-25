@@ -1,15 +1,8 @@
-import { PROFILE, TECH_COUNT, CERTIFICATES, STACK, LEARNING } from '../data';
+import { PROFILE, STACK, LEARNING } from '../data';
 import { Reveal } from '../components/Reveal';
-import { Counter } from '../components/Motion';
 import { GithubCalendar } from '../components/GithubCalendar';
 import { ProfileSwap } from '../components/ProfileSwap';
 import { IconArrow, IconPin } from '../components/Icons';
-
-const STATS = [
-  { value: '800+', label: 'Students served' },
-  { value: String(TECH_COUNT), label: 'Technologies' },
-  { value: String(CERTIFICATES.length).padStart(2, '0'), label: 'Credentials' },
-];
 
 export function About() {
   return (
@@ -54,7 +47,7 @@ export function About() {
             </article>
           </Reveal>
 
-          {/* Study status */}
+          {/* Study status — sits beside the portrait's first row. */}
           <Reveal delay={0.06} className="span-2">
             <article className="bento-card">
               <div className="tile-head">
@@ -84,28 +77,9 @@ export function About() {
             </article>
           </Reveal>
 
-          {/* Numbers */}
+          {/* Disciplines — fills the portrait's second row, so the tall
+              portrait is flanked top and bottom and no cell is left empty. */}
           <Reveal delay={0.12} className="span-2">
-            <article className="bento-card">
-              <div className="tile-head">
-                <span className="eyebrow">By the numbers</span>
-              </div>
-
-              <div className="stat-row">
-                {STATS.map((s) => (
-                  <div className="stat" key={s.label}>
-                    <span className="stat-num">
-                      <Counter value={s.value} />
-                    </span>
-                    <span className="stat-label">{s.label}</span>
-                  </div>
-                ))}
-              </div>
-            </article>
-          </Reveal>
-
-          {/* Disciplines */}
-          <Reveal delay={0.18} className="span-4">
             <article className="bento-card">
               <div className="tile-head tile-head--split">
                 <span className="eyebrow">What I work across</span>
@@ -126,7 +100,7 @@ export function About() {
           </Reveal>
 
           {/* GitHub contribution calendar */}
-          <Reveal delay={0.24} className="span-4">
+          <Reveal delay={0.18} className="span-4">
             <article className="bento-card">
               <div className="tile-head tile-head--split">
                 <span className="eyebrow">Contribution activity</span>
@@ -145,7 +119,7 @@ export function About() {
           </Reveal>
 
           {/* Closing band */}
-          <Reveal delay={0.3} className="span-4">
+          <Reveal delay={0.24} className="span-4">
             <article className="bento-card cta-tile">
               <div className="cta-copy">
                 <h3 className="tile-big">
