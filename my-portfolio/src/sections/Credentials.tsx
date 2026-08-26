@@ -1,6 +1,13 @@
 import { CERTIFICATES, EDUCATION, LEARNING } from '../data';
 import { Reveal } from '../components/Reveal';
+import { GlowEffect } from '../components/GlowEffect';
 import { IconCheck } from '../components/Icons';
+
+/* Earned credentials get the full brand spectrum, turning. */
+const EARNED_GLOW = ['#ffb627', '#fb7185', '#7c5cff', '#34d399'];
+/* In-progress study stays violet and just breathes, matching the dashed
+   border that already separates "studying" from "earned". */
+const STUDYING_GLOW = ['#7c5cff', '#a992ff', '#6d4aff'];
 
 export function Credentials() {
   return (
@@ -29,7 +36,13 @@ export function Credentials() {
 
         <div className="cert-grid">
           {CERTIFICATES.map((cert, i) => (
-            <Reveal key={cert.id} delay={i * 0.06}>
+            <Reveal key={cert.id} delay={i * 0.06} className="glow-host">
+              <GlowEffect
+                colors={EARNED_GLOW}
+                mode="rotate"
+                blur="strong"
+                duration={6}
+              />
               <article className="cert-card">
                 <div className="cert-shot">
                   <img
@@ -78,7 +91,13 @@ export function Credentials() {
 
           <div className="learn-grid">
             {LEARNING.map((l, i) => (
-              <Reveal key={l.id} delay={i * 0.07}>
+              <Reveal key={l.id} delay={i * 0.07} className="glow-host">
+                <GlowEffect
+                  colors={STUDYING_GLOW}
+                  mode="breathe"
+                  blur="strong"
+                  duration={4}
+                />
                 <article className="learn-card">
                   <div className="learn-top">
                     <span className="learn-badge">

@@ -1218,6 +1218,146 @@
 }
 
 /* ─────────────────────────────────────────────
+   Glow effect — animated gradient aura behind a card
+   ───────────────────────────────────────────── */
+
+/* Registering the angle is what makes a conic gradient animatable at all:
+   an unregistered custom property is a string, and strings snap between
+   keyframes instead of interpolating. Where @property is unsupported the
+   rotate mode simply holds still, which is a fine resting state. */
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-host {
+  position: relative;
+  height: 100%;
+  border-radius: var(--r-lg);
+}
+
+.glow {
+  position: absolute;
+  /* Sits a hair outside the card so the aura reads as a rim, not a backing. */
+  inset: -2px;
+  z-index: 0;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  /* Cards that lift on hover set --glow-lift so the aura travels with them;
+     left behind, it would sit low and read as a drop shadow. */
+  transform: translateY(var(--glow-lift, 0)) scale(var(--glow-scale, 1));
+  filter: blur(var(--glow-blur, 12px));
+  transition: opacity var(--t-base), transform var(--t-base);
+  will-change: opacity;
+}
+
+.glow-host:hover .glow,
+.glow-host:focus-within .glow {
+  opacity: 1;
+}
+
+/* Everything the host holds stacks above the aura. */
+.glow-host > *:not(.glow) {
+  position: relative;
+  z-index: 1;
+}
+
+.glow--rotate {
+  background: conic-gradient(
+    from var(--glow-angle) at 50% 50%,
+    var(--glow-loop)
+  );
+}
+
+.glow--static {
+  background: linear-gradient(to right, var(--glow-colors));
+}
+
+.glow--flowHorizontal {
+  background: linear-gradient(to right, var(--glow-loop));
+  background-size: 200% 100%;
+}
+
+.glow--colorShift {
+  background: conic-gradient(from 0deg at 50% 50%, var(--glow-loop));
+}
+
+/* Ellipse, not circle: a circle in a wide card pools above and below it
+   while leaving the long edges bare. An ellipse takes the card's aspect
+   ratio, so the rim stays even whatever the shape. */
+.glow--pulse,
+.glow--breathe {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    var(--glow-colors),
+    transparent 78%
+  );
+}
+
+/* Animation is bound to hover, so nothing paints a blurred layer while the
+   card is at rest — with seven cards on screen that matters. */
+.glow-host:hover .glow--rotate {
+  animation: glow-spin var(--glow-duration) linear infinite;
+}
+
+.glow-host:hover .glow--colorShift {
+  animation: glow-hue var(--glow-duration) linear infinite;
+}
+
+.glow-host:hover .glow--flowHorizontal {
+  animation: glow-flow var(--glow-duration) linear infinite;
+}
+
+.glow-host:hover .glow--pulse {
+  animation: glow-pulse var(--glow-duration) ease-in-out infinite;
+}
+
+.glow-host:hover .glow--breathe {
+  animation: glow-breathe var(--glow-duration) ease-in-out infinite;
+}
+
+@keyframes glow-spin {
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+@keyframes glow-hue {
+  to {
+    filter: blur(var(--glow-blur)) hue-rotate(360deg);
+  }
+}
+
+@keyframes glow-flow {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes glow-pulse {
+  50% {
+    transform: translateY(var(--glow-lift, 0)) scale(calc(var(--glow-scale) * 1.1));
+    opacity: 0.65;
+  }
+}
+
+@keyframes glow-breathe {
+  50% {
+    transform: translateY(var(--glow-lift, 0))
+      scale(calc(var(--glow-scale) * 1.05));
+  }
+}
+
+/* The aura still appears on hover, it just stops moving. */
+@media (prefers-reduced-motion: reduce) {
+  .glow-host:hover .glow {
+    animation: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
    Certificates
    ───────────────────────────────────────────── */
 
@@ -1242,6 +1382,11 @@
 .cert-card:hover {
   border-color: var(--line-amber);
   transform: translateY(-4px);
+}
+
+/* Matches the lift above so the aura rides with the card. */
+.cert-grid .glow-host:hover {
+  --glow-lift: -4px;
 }
 
 /* Scan of the certificate itself */
@@ -2588,9 +2733,12 @@
   transition: border-color var(--t-base), background var(--t-base);
 }
 
+/* Opaque on hover — the same colour the translucent fill resolved to over the
+   page, but solid, so the aura behind stays a rim instead of washing through
+   the text. */
 .learn-card:hover {
   border-color: var(--line-violet);
-  background: rgba(124, 92, 255, 0.05);
+  background: #110e18;
 }
 
 .learn-top {
