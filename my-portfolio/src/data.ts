@@ -42,7 +42,7 @@ export const STACK: StackGroup[] = [
     icon: 'layout',
     summary:
       'Building responsive, accessible interfaces with React and Next.js. I care about layout that holds up on a phone, type that stays readable, and interactions that feel immediate rather than decorative.',
-    items: ['HTML', 'CSS', 'React', 'Next.js', 'Tailwind CSS'],
+    items: ['CSS', 'React', 'Next.js', 'Tailwind CSS'],
   },
   {
     id: 'backend',
@@ -50,8 +50,8 @@ export const STACK: StackGroup[] = [
     kicker: 'Servers & Logic',
     icon: 'server',
     summary:
-      'Writing the server side that makes an app real — routing, business logic, and APIs. Node.js and Express are my default; I also work in Python, Java, and PHP depending on what the project calls for.',
-    items: ['Node.js', 'Express', 'Python', 'Java', 'PHP'],
+      'Writing the server side that makes an app real — routing, business logic, and APIs. Node.js and Express are my default; I also work in Python and Java depending on what the project calls for.',
+    items: ['Node.js', 'Express', 'Python', 'Java'],
   },
   {
     id: 'database',
@@ -59,8 +59,8 @@ export const STACK: StackGroup[] = [
     kicker: 'Data & Persistence',
     icon: 'database',
     summary:
-      'Designing schemas and querying them without surprises. Relational work in PostgreSQL and MySQL, plus managed platforms like Supabase and Convex when speed to ship matters.',
-    items: ['Supabase', 'PostgreSQL', 'MySQL', 'Convex'],
+      'Designing schemas and querying them without surprises. Relational work in PostgreSQL and MySQL, plus managed platforms like Supabase when speed to ship matters.',
+    items: ['Supabase', 'PostgreSQL', 'MySQL'],
   },
   {
     id: 'auth',
@@ -68,8 +68,8 @@ export const STACK: StackGroup[] = [
     kicker: 'Identity & Access',
     icon: 'key',
     summary:
-      'Handling sign-up, sessions, and access control so the right person sees the right data. I use Supabase Auth and Convex rather than rolling my own — auth is the wrong place to be clever.',
-    items: ['Supabase Auth', 'Convex'],
+      'Handling sign-up, sessions, and access control so the right person sees the right data. I use Supabase Auth rather than rolling my own — auth is the wrong place to be clever.',
+    items: ['Supabase Auth'],
   },
   {
     id: 'security',
@@ -77,14 +77,8 @@ export const STACK: StackGroup[] = [
     kicker: 'Analysis & Defence',
     icon: 'shield',
     summary:
-      'The side I am actively building. I am working through Cisco\u2019s Introduction to Cybersecurity and Hack The Box Academy, and I apply what I have so far by using vetted auth providers instead of rolling my own and by thinking about attack surface before I ship rather than after.',
-    items: [
-      'Cisco Packet Tracer',
-      'Network Fundamentals',
-      'Threat & Vulnerability Concepts',
-      'Secure Authentication',
-      'Hack The Box Academy',
-    ],
+      'The side I am actively building. I am working through Cisco\u2019s Introduction to Cybersecurity, and I apply what I have so far by using vetted auth providers instead of rolling my own and by thinking about attack surface before I ship rather than after.',
+    items: ['Cisco Packet Tracer'],
   },
   {
     id: 'tools',
