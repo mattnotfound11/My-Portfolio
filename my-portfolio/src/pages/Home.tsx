@@ -15,7 +15,7 @@ import { WORK } from '../work';
 import { Link, useTitle } from '../router';
 import { Reveal } from '../components/Reveal';
 import { Halftone } from '../components/Halftone';
-import { TiltedGrid } from '../components/TiltedGrid';
+import { ProjectFan } from '../components/ProjectFan';
 import { DotCalendar } from '../components/DotCalendar';
 import { CertCard } from '../components/CertCard';
 import { CertViewer } from '../components/CertViewer';
@@ -130,25 +130,7 @@ export function Home() {
       <section className="sec">
         <Reveal>
           <SectionHead n="01" title="projects" to="/projects" more="all projects" />
-          <TiltedGrid images={WORK.map((w) => ({ src: w.image, alt: `${w.name} home page` }))} className="tg-home" tileHeight={38} axis={62}>
-            <div className="tg-copy">
-              <p className="tg-kicker">{WORK.length} live projects</p>
-              <p className="tg-title">Built for real users.</p>
-            </div>
-          </TiltedGrid>
-          <ul className="rows tg-list">
-            {WORK.map((w) => (
-              <li key={w.id} className="row">
-                <span className="row-when">{w.status}</span>
-                <span className="row-what">
-                  <a href={w.live} target="_blank" rel="noopener noreferrer">
-                    {w.name} <span aria-hidden="true">↗</span>
-                  </a>
-                </span>
-                <span className="row-where">{w.kind}</span>
-              </li>
-            ))}
-          </ul>
+          <ProjectFan />
         </Reveal>
       </section>
 

@@ -743,73 +743,129 @@ a.chip--dashed:hover {
   color: var(--fg);
 }
 
-/* Curved project carousel */
+/* Project fan */
 
-.tgh {
+.fan {
   position: relative;
-  overflow: hidden;
 }
-.tgh-band {
+.fan-stage {
+  position: relative;
+  height: 360px;
+  display: grid;
+  place-items: center;
+}
+.fan-card {
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transition: opacity 0.5s;
-}
-.tgh-tile {
-  position: absolute;
-  transform-style: preserve-3d;
-}
-.tgh-slice {
-  position: absolute;
-  top: 0;
-  overflow: hidden;
-  background: var(--surface-2);
-}
-.tgh-slice--first {
-  border-radius: 8px 0 0 8px;
-}
-.tgh-slice--last {
-  border-radius: 0 8px 8px 0;
-}
-.tgh-img {
-  position: absolute;
-  top: 0;
-  max-width: none;
-  object-fit: cover;
-  object-position: top;
-}
-.tg-home {
-  height: 440px;
-  margin: 0 -24px;
+  width: 330px;
+  max-width: 82%;
+  padding: 20px;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--bg);
+  box-shadow: var(--shadow);
+  text-align: left;
+  display: grid;
+  gap: 12px;
+  transition:
+    transform 0.5s var(--ease),
+    opacity 0.3s;
 }
-.tg-copy {
-  position: relative;
-  z-index: 1;
-  padding: 32px 24px 0;
-  text-align: center;
-}
-.tg-kicker {
-  font: 400 10.5px var(--mono);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-.tg-title {
-  margin-top: 6px;
-  font: 400 24px/1.2 var(--pixel);
-  color: var(--fg);
-}
-.tg-list {
-  margin-top: 24px;
+.fan-card--front {
+  z-index: 3;
+  animation: fan-in 0.45s var(--ease);
 }
 @keyframes fan-in {
   from {
     opacity: 0;
     transform: translateY(10px) scale(0.98);
   }
+}
+.fan-card--left,
+.fan-card--right {
+  z-index: 1;
+  opacity: 0.55;
+  filter: grayscale(1);
+  pointer-events: auto;
+}
+.fan-card--left {
+  transform: translateX(-46%) rotate(-8deg) scale(0.9);
+}
+.fan-card--right {
+  transform: translateX(46%) rotate(8deg) scale(0.9);
+}
+.fan-card--left:hover {
+  transform: translateX(-50%) rotate(-9deg) scale(0.91);
+  opacity: 0.75;
+}
+.fan-card--right:hover {
+  transform: translateX(50%) rotate(9deg) scale(0.91);
+  opacity: 0.75;
+}
+.fan-card--left .fan-blurb,
+.fan-card--right .fan-blurb {
+  -webkit-line-clamp: 2;
+}
+.fan-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fan-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--line);
+  flex: none;
+}
+.fan-title h3 {
+  font: 400 17px/1.2 var(--pixel);
+  color: var(--fg);
+}
+.fan-blurb {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fan-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+.fan-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+.fan-nav button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+.fan-nav button:hover {
+  color: var(--fg);
+  border-color: var(--muted);
+}
+.fan-count {
+  font: 400 11px var(--mono);
+  color: var(--faint);
+  letter-spacing: 0.08em;
+  min-width: 56px;
+  text-align: center;
 }
 
 /* Rows (education, certs list) */
@@ -1830,9 +1886,18 @@ button.cert:hover .cert-view {
   .sec {
     margin-top: 88px;
   }
-  .tg-home {
-    height: 340px;
-    margin: 0;
+  .fan-stage {
+    height: 380px;
+  }
+  .fan-card {
+    width: 300px;
+    max-width: 88%;
+  }
+  .fan-card--left {
+    transform: translateX(-30%) rotate(-6deg) scale(0.88);
+  }
+  .fan-card--right {
+    transform: translateX(30%) rotate(6deg) scale(0.88);
   }
   .row {
     grid-template-columns: 1fr;
