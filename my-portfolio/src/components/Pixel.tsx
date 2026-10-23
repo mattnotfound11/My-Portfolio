@@ -2,14 +2,18 @@
  * Tiny pixel-art renderer. Each sprite is a list of equal-length rows where
  * every character is one pixel:
  *   X = ink (current text colour)   p = blush pink   w = paper (page bg)
- *   y = warm yellow                 . = transparent
+ *   y = duck yellow   Y = wing shade   o = beak orange   k = eye (always dark)
+ *   . = transparent
  */
 
 const FILL: Record<string, string> = {
   X: 'currentColor',
   p: '#f2a7bc',
   w: 'var(--bg)',
-  y: '#f5c451',
+  y: '#ffd43b',
+  Y: '#f2b705',
+  o: '#f08c00',
+  k: '#1b1b1f',
 };
 
 export function Pixels({
@@ -45,65 +49,39 @@ export function Pixels({
   );
 }
 
-/* ── Byte the cat (16 × 12), facing right ──────────────── */
+/* ── The ducks (16 × 14), facing right ────────────────── */
 
-const HEAD = [
-  '...........X..X.',
-  'X..........XXXX.',
-  'X.........XXXXXX',
-  '.X........XXwXwX',
-  '.X........XXXpXX',
+const DUCK_HEAD = [
+  '........yyyy....',
+  '.......yyyyyy...',
+  '.......yyykyy...',
+  '.......yyyyyyooo',
+  '.......yyyyyyoo.',
+  '........yyyyy...',
+];
+const DUCK_BLINK_HEAD = [
+  '........yyyy....',
+  '.......yyyyyy...',
+  '.......yyyyyy...',
+  '.......yyyyyyooo',
+  '.......yyyyyyoo.',
+  '........yyyyy...',
+];
+const DUCK_BODY = [
+  'y......yyyyyy...',
+  'yy...yyyyyyyyy..',
+  'yyyyyyYYYYyyyy..',
+  'yyyyyYYYYYyyyy..',
+  '.yyyyyYYYyyyy...',
+  '..yyyyyyyyyy....',
 ];
 
-export const CAT = {
-  walkA: [
-    ...HEAD,
-    '..XXXXXXXXXXXXX.',
-    '..XXXXXXXXXXXX..',
-    '..XXXXXXXXXXXX..',
-    '...XXXXXXXXXX...',
-    '...X.X....X.X...',
-    '..X...X..X...X..',
-    '................',
-  ],
-  walkB: [
-    ...HEAD,
-    '..XXXXXXXXXXXXX.',
-    '..XXXXXXXXXXXX..',
-    '..XXXXXXXXXXXX..',
-    '...XXXXXXXXXX...',
-    '...X.X....X.X...',
-    '...X.X....X.X...',
-    '................',
-  ],
-  sit: [
-    '...........X..X.',
-    '...........XXXX.',
-    '..........XXXXXX',
-    '..........XXwXwX',
-    'XX........XXXpXX',
-    '..X......XXXXXX.',
-    '..X....XXXXXXXX.',
-    '...X..XXXXXXXXX.',
-    '....XXXXXXXXXXX.',
-    '....XXXXXXXXXXX.',
-    '.....XXX.XX.XX..',
-    '................',
-  ],
-  blink: [
-    '...........X..X.',
-    '...........XXXX.',
-    '..........XXXXXX',
-    '..........XXXXXX',
-    'XX........XXXpXX',
-    '..X......XXXXXX.',
-    '..X....XXXXXXXX.',
-    '...X..XXXXXXXXX.',
-    '....XXXXXXXXXXX.',
-    '....XXXXXXXXXXX.',
-    '.....XXX.XX.XX..',
-    '................',
-  ],
+export const DUCK = {
+  walkA: [...DUCK_HEAD, ...DUCK_BODY, '....o....o......', '...oo...oo......'],
+  walkB: [...DUCK_HEAD, ...DUCK_BODY, '....o...o.......', '....oo..oo......'],
+  /** Resting: tucked down, feet hidden. */
+  sit: ['................', '................', ...DUCK_HEAD, ...DUCK_BODY],
+  blink: ['................', '................', ...DUCK_BLINK_HEAD, ...DUCK_BODY],
 };
 
 export const HEART = ['.pp.pp.', 'ppppppp', 'ppppppp', '.ppppp.', '..ppp..', '...p...'];

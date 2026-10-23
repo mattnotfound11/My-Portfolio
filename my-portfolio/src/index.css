@@ -2176,23 +2176,23 @@ button.cert:hover .cert-view {
   color: var(--fg);
 }
 
-/* ── Byte the cat ───────────────────────────────────────── */
+/* ── The ducks ──────────────────────────────────────────── */
 
 .pixels {
   display: block;
   image-rendering: pixelated;
 }
-.cat-floor {
+.duck-floor {
   position: relative;
   width: 100%;
   overflow: hidden;
   color: var(--fg);
 }
-.cat-floor--foot {
+.duck-floor--foot {
   max-width: var(--col);
   margin: 96px auto -1px;
 }
-.cat {
+.duck {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -2200,25 +2200,25 @@ button.cert:hover .cert-view {
   padding: 0;
   will-change: transform;
 }
-.cat-flip {
+.duck-flip {
   display: block;
   transform-origin: 50% 100%;
 }
-.cat-sprite {
+.duck-sprite {
   display: block;
 }
-.cat-sprite.is-hop {
-  animation: cat-hop 0.42s var(--ease);
+.duck-sprite.is-hop {
+  animation: duck-hop 0.42s var(--ease);
 }
-@keyframes cat-hop {
+@keyframes duck-hop {
   40% {
     transform: translateY(-10px);
   }
 }
-.cat:focus-visible {
+.duck:focus-visible {
   outline-offset: 4px;
 }
-.cat-fx {
+.duck-fx {
   position: absolute;
   left: 0;
   right: 0;
@@ -2226,7 +2226,7 @@ button.cert:hover .cert-view {
   height: 0;
   pointer-events: none;
 }
-.cat-bubble {
+.duck-bubble {
   position: absolute;
   bottom: 4px;
   left: 50%;
@@ -2240,12 +2240,12 @@ button.cert:hover .cert-view {
   white-space: nowrap;
   animation: fan-in 0.25s var(--ease);
 }
-.cat-heart {
+.duck-heart {
   position: absolute;
   bottom: 0;
-  animation: cat-heart 1.2s ease-out forwards;
+  animation: duck-heart 1.2s ease-out forwards;
 }
-@keyframes cat-heart {
+@keyframes duck-heart {
   to {
     transform: translateY(-34px);
     opacity: 0;
@@ -2470,7 +2470,7 @@ button.cert:hover .cert-view {
   }
 }
 @media print {
-  .cat-floor {
+  .duck-floor {
     display: none !important;
   }
 }

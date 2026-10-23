@@ -1,7 +1,7 @@
 import { useEffect, useState, type ComponentType, type ReactNode, type SVGProps } from 'react';
 import { Link, usePath } from '../router';
 import { PROFILE } from '../data';
-import { Cat } from './Cat';
+import { Ducks } from './Ducks';
 import type { ThemeChoice } from '../theme';
 import {
   IconBag,
@@ -185,7 +185,7 @@ export function Layout(props: Props) {
       <div className="dots dots--corner" aria-hidden="true" />
       <main id="main" className="main">
         {children}
-        <Cat className="cat-floor--foot" scale={3} />
+        <Ducks className="duck-floor--foot" scale={3} />
         <footer className="foot">
           <span>
             © {new Date().getFullYear()} {PROFILE.name} · {PROFILE.location}
