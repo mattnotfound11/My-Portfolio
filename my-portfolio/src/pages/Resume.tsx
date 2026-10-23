@@ -3,18 +3,22 @@ import { CERTIFICATES, EDUCATION, LEARNING, PROFILE, STACK } from '../data';
 import { WORK } from '../work';
 import { useTitle } from '../router';
 import { Reveal } from '../components/Reveal';
-import { Mark, PageHead } from '../components/ui';
+import { PageHead } from '../components/ui';
+import { Timeline, type TimelineEntry } from '../components/Timeline';
 import { IconDownload, IconMail } from '../components/Icons';
 
-type Role = { title: string; when: string; body?: string };
-type Entry = { org: string; sub: string; roles: Role[] };
-
 /** Education exactly as listed on the portfolio, grouped by school. */
-const ENTRIES: Entry[] = EDUCATION.reduce<Entry[]>((out, e) => {
-  const role: Role = { title: e.role, when: e.year, body: e.note };
+const ENTRIES: TimelineEntry[] = EDUCATION.reduce<TimelineEntry[]>((out, e) => {
+  const role = { title: e.role, when: e.year, body: e.note };
   const last = out[out.length - 1];
   if (last && last.org === e.org) last.roles.push(role);
-  else out.push({ org: e.org, sub: e.now ? 'Currently studying' : 'Education', roles: [role] });
+  else
+    out.push({
+      org: e.org,
+      sub: e.now ? 'Currently studying' : 'Education',
+      logo: e.org === PROFILE.school ? '/assets/orgs/usa.png' : undefined,
+      roles: [role],
+    });
   return out;
 }, []);
 
@@ -24,30 +28,6 @@ const GLANCE = [
   { k: 'Role', v: PROFILE.role },
   { k: 'Status', v: 'Open to internships' },
 ];
-
-function Timeline({ entry }: { entry: Entry }) {
-  const many = entry.roles.length > 1;
-  return (
-    <article className="tl">
-      <div className="tl-head">
-        <Mark name={entry.org} />
-        <div>
-          <h2 className="tl-org">{entry.org}</h2>
-          <p className="tl-sub">{entry.sub}</p>
-        </div>
-      </div>
-      <ol className={`tl-roles ${many ? 'tl-roles--many' : ''}`}>
-        {entry.roles.map((r) => (
-          <li key={r.title} className="tl-role">
-            <h3 className="tl-title">{r.title}</h3>
-            <p className="tl-when">{r.when}</p>
-            {r.body && <div className="tl-body"><p>{r.body}</p></div>}
-          </li>
-        ))}
-      </ol>
-    </article>
-  );
-}
 
 export function Resume() {
   useTitle(`Resume — ${PROFILE.fullName}`);

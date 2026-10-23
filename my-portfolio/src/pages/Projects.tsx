@@ -34,8 +34,10 @@ export function Projects() {
             {g.items.map((p, i) => (
               <Reveal key={p.id} delay={Math.min(i, 3) * 0.06}>
                 <article className="proj">
+                  <a href={p.live} target="_blank" rel="noopener noreferrer" className="proj-shot" tabIndex={-1}>
+                    <img src={p.image} alt={`${p.name} home page`} loading="lazy" />
+                  </a>
                   <div className="proj-top">
-                    <img src={p.image} alt="" className="proj-thumb" loading="lazy" />
                     <div className="proj-head">
                       <div className="chips">
                         <span className={`tag ${p.status === 'Shipped' ? 'tag--solid' : ''}`}>‹ {p.status} ›</span>

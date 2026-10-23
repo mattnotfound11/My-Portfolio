@@ -209,7 +209,8 @@ export type Building = {
   kind: string;
   image: string;
   live: string;
-  repo: string;
+  /** Omitted for private repos, which would 404 for visitors. */
+  repo?: string;
   blurb: string;
   stack: string[];
 };
@@ -260,6 +261,36 @@ export const BUILDING: Building[] = [
       'Storefront and ordering system for a bakery in Jaro, Iloilo City. Product catalog with allergen and nutrition panels, a pickup-slot picker, custom cake orders, and order tracking by reference. Pricing runs on integer centavos, and the business rules sit outside React so they can be tested without a browser.',
     stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'Vitest'],
   },
+  {
+    id: 'sage-esports',
+    name: 'SAGE Esports',
+    kind: 'Esports organization',
+    image: '/assets/projects/sage-esports.jpg',
+    live: 'https://sage-esports.vercel.app',
+    blurb:
+      'Official website for San Agustin Golden Eagle Esports (SAGE), the esports organization of the University of San Agustin. Match schedules, results, rosters, news, a merch shop, and a staff dashboard, backed by an Express API.',
+    stack: ['Next.js', 'Express', 'Supabase'],
+  },
+  {
+    id: 'misobooth',
+    name: 'Miso Booth',
+    kind: 'Pop-up photobooth',
+    image: '/assets/projects/misobooth.jpg',
+    live: 'https://misobooth.vercel.app',
+    blurb:
+      'Site for a vintage-style pop-up photobooth in Iloilo City. Rotating themed frames, photo strips, a gallery, and private bookings for weddings, birthdays, debuts, and corporate events.',
+    stack: ['React', 'Vite'],
+  },
+  {
+    id: 'clutch',
+    name: 'Clutch Cafe',
+    kind: 'Car-themed cafe',
+    image: '/assets/projects/clutch.jpg',
+    live: 'https://clutch-cafe-nine.vercel.app',
+    blurb:
+      'Website for a car-themed coffee shop on C1 Road, Villa Arevalo, Iloilo City. Menu, the garage, customer reviews, socials, and directions, with live open hours.',
+    stack: ['Vite'],
+  },
 ];
 
 /* ── Certifications ────────────────────────────────────── */
@@ -273,6 +304,8 @@ export type Certificate = {
   meta: string[];
   /** Badge wording. Attendance records say so plainly rather than posing as skills certs. */
   kind?: 'Verified' | 'Attended';
+  /** What sort of certificate this is, used to group the Certifications page. */
+  type: 'Program' | 'Course' | 'Event';
   /** Scan of the certificate itself, cropped free of verification codes. */
   image: string;
 };
@@ -280,6 +313,7 @@ export type Certificate = {
 export const CERTIFICATES: Certificate[] = [
   {
     id: 'aws',
+    type: 'Program',
     image: '/assets/certificates/aws-ai-ml-scholars.jpg',
     issuer: 'Udacity × AWS',
     name: 'AWS AI & ML Scholars',
@@ -295,6 +329,7 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'mcp',
+    type: 'Course',
     image: '/assets/certificates/mcp.jpg',
     issuer: 'Scrimba',
     name: 'Intro to Model Context Protocol (MCP)',
@@ -305,6 +340,7 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'ui',
+    type: 'Course',
     image: '/assets/certificates/ui-design.jpg',
     issuer: 'Scrimba',
     name: 'Intro to UI Design Fundamentals',
@@ -315,6 +351,7 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'git',
+    type: 'Course',
     image: '/assets/certificates/git-github.jpg',
     issuer: 'Scrimba',
     name: 'Learn Git and GitHub',
@@ -325,6 +362,7 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'css-vars',
+    type: 'Course',
     image: '/assets/certificates/css-variables.jpg',
     issuer: 'Scrimba',
     name: 'Learn CSS Variables',
@@ -335,6 +373,7 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'packet-tracer',
+    type: 'Course',
     image: '/assets/certificates/packet-tracer.jpg',
     issuer: 'Cisco Networking Academy',
     name: 'Getting Started with Cisco Packet Tracer',
@@ -345,6 +384,7 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'ai-fest',
+    type: 'Event',
     image: '/assets/certificates/ai-fest.jpg',
     issuer: '2026 AI Fest · DOST VI',
     name: 'AI GAME ON! — 2026 AI Fest',
@@ -484,5 +524,114 @@ export const PRODUCTS: Product[] = [
     points: ['Opens your Google review page on tap', 'Set up for your business listing'],
     status: 'Coming soon',
     image: '/assets/shop/nfc-google-review.jpg',
+  },
+];
+
+export const CERT_TYPES: { type: Certificate['type']; label: string; note: string }[] = [
+  { type: 'Program', label: 'Program & scholarship', note: 'Multi-part programs with hands-on builds.' },
+  { type: 'Course', label: 'Course completion', note: 'Self-paced courses, grouped by issuer.' },
+  { type: 'Event', label: 'Event attendance', note: 'Conferences and events I attended.' },
+];
+
+/* ── Experience ────────────────────────────────────────── */
+
+export type Experience = {
+  id: string;
+  org: string;
+  orgSub: string;
+  logo?: string;
+  link?: { href: string; label: string };
+  role: string;
+  when: string;
+  body: string;
+  chips: string[];
+  highlight?: string;
+};
+
+export const EXPERIENCE: Experience[] = [
+  {
+    id: 'cdg',
+    org: 'Cascade Development Group',
+    orgSub: 'Software development group · Iloilo City',
+    logo: '/assets/orgs/cdg.png',
+    link: { href: 'https://cdg-official.vercel.app', label: 'cdg-official.vercel.app' },
+    role: 'Front-End Developer',
+    when: 'Present',
+    body: 'Translating UI designs into fast, precise, and accessible front-end code that holds up under real-world use. React and Next.js component architecture, responsive layouts, cross-browser compatibility, and interaction quality.',
+    chips: ['React', 'Next.js', 'UI implementation', 'Responsive design'],
+  },
+  {
+    id: 'hack-iloilo',
+    org: 'HACK ILOILO 2026',
+    orgSub: 'Hackathon · Iloilo Province',
+    logo: '/assets/orgs/ledip.png',
+    link: {
+      href: 'https://www.facebook.com/ledipcenteriloiloprovince',
+      label: 'Provincial LEDIP Office, Iloilo',
+    },
+    role: 'Top 10 — Team KASCODERS',
+    when: '2026 · First hackathon',
+    body: 'My first hackathon. I competed with my team, KASCODERS, and we made it into the top 10.',
+    chips: ['Hackathon', 'Teamwork', 'Rapid prototyping'],
+    highlight: 'Top 10',
+  },
+  {
+    id: 'pharmatrack',
+    org: 'PHARMATRACK',
+    orgSub: 'University of San Agustin — Pharmacy Dept.',
+    logo: '/assets/orgs/usa.png',
+    link: { href: 'https://lsgph-pharmatrack.com/', label: 'lsgph-pharmatrack.com' },
+    role: 'UI/UX Design',
+    when: 'Shipped',
+    body: 'I designed the interface and the user flows — the screens, and the path a student takes from registering to being scanned in.',
+    chips: ['UI/UX Design', 'User flows', 'React'],
+  },
+];
+
+/* ── Affiliations ──────────────────────────────────────── */
+
+export type Affiliation = {
+  id: string;
+  name: string;
+  short: string;
+  role: string;
+  logo: string;
+  href: string;
+  linkLabel: string;
+  blurb: string;
+};
+
+export const AFFILIATIONS: Affiliation[] = [
+  {
+    id: 'cdg',
+    name: 'Cascade Development Group',
+    short: 'CDG',
+    role: 'Front-End Developer',
+    logo: '/assets/orgs/cdg.png',
+    href: 'https://cdg-official.vercel.app',
+    linkLabel: 'cdg-official.vercel.app',
+    blurb:
+      'A software development group based in Iloilo City, building websites, business systems, and AI tools for growing businesses and organizations. Est. 2026.',
+  },
+  {
+    id: 'itsa',
+    name: 'Information Technology Student Association',
+    short: 'ITSA',
+    role: 'Member',
+    logo: '/assets/orgs/itsa.png',
+    href: 'https://itsa-website-psi.vercel.app',
+    linkLabel: 'itsa-website-psi.vercel.app',
+    blurb:
+      'The official student organization of Information Technology students at the University of San Agustin, building community, skills, and opportunities in tech.',
+  },
+  {
+    id: 'ads',
+    name: 'Augustinian Developer Society',
+    short: 'ADS',
+    role: 'Member',
+    logo: '/assets/orgs/ads.png',
+    href: 'https://www.facebook.com/adsusadevs',
+    linkLabel: 'facebook.com/adsusadevs',
+    blurb: 'The developer community of the University of San Agustin.',
   },
 ];

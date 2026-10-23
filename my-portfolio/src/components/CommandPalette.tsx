@@ -21,6 +21,9 @@ export function CommandPalette({ open, onClose, setTheme }: Props) {
     () => [
       { id: 'home', group: 'Pages', label: 'Home', run: () => navigate('/') },
       { id: 'resume', group: 'Pages', label: 'Resume', run: () => navigate('/resume') },
+      { id: 'experience', group: 'Pages', label: 'Experience', run: () => navigate('/experience') },
+      { id: 'collabs', group: 'Pages', label: 'Collabs', run: () => navigate('/collabs') },
+      { id: 'affiliations', group: 'Pages', label: 'Affiliations', run: () => navigate('/affiliations') },
       { id: 'projects', group: 'Pages', label: 'Projects', run: () => navigate('/projects') },
       { id: 'stack', group: 'Pages', label: 'Tech stack', run: () => navigate('/stack') },
       { id: 'certs', group: 'Pages', label: 'Certifications', run: () => navigate('/certifications') },

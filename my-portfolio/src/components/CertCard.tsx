@@ -1,8 +1,7 @@
 import type { Certificate } from '../data';
-import { Mark } from './ui';
 
 /** Small rotations so the grid reads like cards laid on a desk. */
-const TILT = [-1.4, 0.9, -0.6, 1.3, -1, 0.5, 1.1, -0.8];
+const TILT = [-1.2, 0.8, -0.5, 1.1, -0.9, 0.5, 1, -0.7];
 
 export function CertCard({ cert, index, onOpen, tilt = false }: {
   cert: Certificate;
@@ -18,11 +17,15 @@ export function CertCard({ cert, index, onOpen, tilt = false }: {
       onClick={() => onOpen(cert)}
       aria-label={`View ${cert.name} certificate`}
     >
-      <Mark name={cert.issuer} size="sm" />
-      <span className="cert-name">{cert.name}</span>
-      <span className="cert-issuer">{cert.issuer}</span>
-      <span className="cert-view" aria-hidden="true">
-        ‹ View ›
+      <span className="cert-shot">
+        <img src={cert.image} alt="" loading="lazy" />
+      </span>
+      <span className="cert-text">
+        <span className="cert-name">{cert.name}</span>
+        <span className="cert-issuer">
+          {cert.issuer} · {cert.year}
+        </span>
+        <span className="cert-view" aria-hidden="true">‹ View ›</span>
       </span>
     </button>
   );

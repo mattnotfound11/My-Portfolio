@@ -172,6 +172,14 @@ export const IconSmartphone = (p: P) => (
   </svg>
 );
 
+export const IconUsers = (p: P) => (
+  <svg {...base} {...p}>
+    <circle cx="9" cy="8.5" r="3.2" />
+    <path d="M3 19.5a6 6 0 0 1 12 0" />
+    <path d="M15.5 5.6a3.2 3.2 0 0 1 0 5.8M17.5 14.2a6 6 0 0 1 3.5 5.3" />
+  </svg>
+);
+
 export const IconBag = (p: P) => (
   <svg {...base} {...p}>
     <path d="M5 8h14l-1 12.5H6Z" />

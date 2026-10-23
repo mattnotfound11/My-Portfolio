@@ -1,7 +1,9 @@
 import { useState, type ReactElement } from 'react';
 import {
+  AFFILIATIONS,
   CERTIFICATES,
   EDUCATION,
+  EXPERIENCE,
   GEAR,
   HIGHLIGHTS,
   LEARNING,
@@ -13,7 +15,7 @@ import { WORK } from '../work';
 import { Link, useTitle } from '../router';
 import { Reveal } from '../components/Reveal';
 import { Halftone } from '../components/Halftone';
-import { ProjectFan } from '../components/ProjectFan';
+import { TiltedGrid } from '../components/TiltedGrid';
 import { DotCalendar } from '../components/DotCalendar';
 import { CertCard } from '../components/CertCard';
 import { CertViewer } from '../components/CertViewer';
@@ -128,13 +130,49 @@ export function Home() {
       <section className="sec">
         <Reveal>
           <SectionHead n="01" title="projects" to="/projects" more="all projects" />
-          <ProjectFan />
+          <TiltedGrid images={WORK.map((w) => ({ src: w.image, alt: `${w.name} home page` }))} className="tg-home" tileHeight={38} axis={62}>
+            <div className="tg-copy">
+              <p className="tg-kicker">{WORK.length} live projects</p>
+              <p className="tg-title">Built for real users.</p>
+            </div>
+          </TiltedGrid>
+          <ul className="rows tg-list">
+            {WORK.map((w) => (
+              <li key={w.id} className="row">
+                <span className="row-when">{w.status}</span>
+                <span className="row-what">
+                  <a href={w.live} target="_blank" rel="noopener noreferrer">
+                    {w.name} <span aria-hidden="true">↗</span>
+                  </a>
+                </span>
+                <span className="row-where">{w.kind}</span>
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </section>
 
       <section className="sec">
         <Reveal>
-          <SectionHead n="02" title="education" to="/resume" more="full resume" />
+          <SectionHead n="02" title="experience" to="/experience" more="full history" />
+          <ul className="rows">
+            {EXPERIENCE.map((e) => (
+              <li key={e.id} className="row">
+                <span className="row-when">{e.when}</span>
+                <span className="row-what">
+                  {e.role}
+                  {e.highlight && <span className="tag tag--solid row-badge">{e.highlight}</span>}
+                </span>
+                <span className="row-where">{e.org}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
+      <section className="sec">
+        <Reveal>
+          <SectionHead n="03" title="education" to="/resume" more="full resume" />
           <ul className="rows">
             {EDUCATION.map((r) => (
               <li key={r.year} className="row">
@@ -164,7 +202,7 @@ export function Home() {
 
       <section className="sec">
         <Reveal>
-          <SectionHead n="03" title="certifications" to="/certifications" more="all certifications" />
+          <SectionHead n="04" title="certifications" to="/certifications" more="all certifications" />
           <div className="cert-grid">
             {CERTIFICATES.slice(0, 3).map((c, i) => (
               <CertCard key={c.id} cert={c} index={i} onOpen={setCert} />
@@ -175,7 +213,24 @@ export function Home() {
 
       <section className="sec">
         <Reveal>
-          <SectionHead n="04" title="currently studying" />
+          <SectionHead n="05" title="affiliations" to="/affiliations" more="all affiliations" />
+          <ul className="aff-row">
+            {AFFILIATIONS.map((a) => (
+              <li key={a.id}>
+                <img src={a.logo} alt="" className="aff-logo" loading="lazy" />
+                <span>
+                  <strong>{a.short}</strong>
+                  <small>{a.role}</small>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
+      <section className="sec">
+        <Reveal>
+          <SectionHead n="06" title="currently studying" />
           <div className="learn-grid">
             {LEARNING.map((l) => (
               <article key={l.id} className="learn">
@@ -193,7 +248,7 @@ export function Home() {
 
       <section className="sec">
         <Reveal>
-          <SectionHead n="05" title="gear" to="/gear" more="all gear" />
+          <SectionHead n="07" title="gear" to="/gear" more="all gear" />
           <div className="gear-grid gear-grid--home">
             {GEAR.map((g) => (
               <GearCard key={g.id} item={g} compact />
@@ -206,7 +261,7 @@ export function Home() {
         <Reveal>
           <div className="sec-head">
             <h2 className="sec-title">
-              <span className="sec-n">06</span> — github
+              <span className="sec-n">08</span> — github
             </h2>
             <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="sec-more">
               @{PROFILE.githubHandle} ↗

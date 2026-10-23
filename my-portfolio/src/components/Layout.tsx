@@ -1,10 +1,11 @@
 import { useEffect, useState, type ComponentType, type ReactNode, type SVGProps } from 'react';
 import { Link, usePath } from '../router';
 import { PROFILE } from '../data';
+import { Cat } from './Cat';
 import type { ThemeChoice } from '../theme';
 import {
   IconBag,
-  IconFile,
+  IconUsers,
   IconLaptop,
   IconGithub,
   IconLinkedin,
@@ -22,17 +23,20 @@ type NavItem = { to: string; label: string; icon?: Icon; external?: boolean };
 const GROUPS: NavItem[][] = [
   [
     { to: '/shop', label: 'Shop', icon: IconBag },
-    { to: '/resume', label: 'Resume', icon: IconFile },
+    { to: '/collabs', label: 'Collabs', icon: IconUsers },
     { to: '/gear', label: 'Gear', icon: IconLaptop },
+  ],
+  [
+    { to: '/projects', label: 'Projects' },
+    { to: '/experience', label: 'Experience' },
+    { to: '/resume', label: 'Resume' },
+    { to: '/stack', label: 'Stack' },
+    { to: '/certifications', label: 'Certifications' },
+    { to: '/affiliations', label: 'Affiliations' },
   ],
   [
     { to: PROFILE.github, label: 'GitHub', icon: IconGithub, external: true },
     { to: PROFILE.linkedin, label: 'LinkedIn', icon: IconLinkedin, external: true },
-  ],
-  [
-    { to: '/projects', label: 'Projects' },
-    { to: '/stack', label: 'Stack' },
-    { to: '/certifications', label: 'Certifications' },
   ],
 ];
 
@@ -181,6 +185,7 @@ export function Layout(props: Props) {
       <div className="dots dots--corner" aria-hidden="true" />
       <main id="main" className="main">
         {children}
+        {path !== '/collabs' && <Cat className="cat-floor--foot" scale={3} />}
         <footer className="foot">
           <span>
             © {new Date().getFullYear()} {PROFILE.name} · {PROFILE.location}

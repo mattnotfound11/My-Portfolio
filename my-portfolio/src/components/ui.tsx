@@ -34,7 +34,14 @@ export function Chip({ children, dashed = false }: { children: ReactNode; dashed
 }
 
 /** Two-letter badge standing in for an organisation's logo. */
-export function Mark({ name, size = 'md' }: { name: string; size?: 'sm' | 'md' }) {
+export function Mark({ name, size = 'md', logo }: { name: string; size?: 'sm' | 'md'; logo?: string }) {
+  if (logo) {
+    return (
+      <span className={`mark mark--${size} mark--logo`} aria-hidden="true">
+        <img src={logo} alt="" loading="lazy" />
+      </span>
+    );
+  }
   const letters = name
     .replace(/[^A-Za-z ]/g, ' ')
     .split(/\s+/)

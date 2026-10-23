@@ -11,6 +11,9 @@ import { Stack } from './pages/Stack';
 import { Certifications } from './pages/Certifications';
 import { Gear } from './pages/Gear';
 import { Shop } from './pages/Shop';
+import { Collabs } from './pages/Collabs';
+import { Experience } from './pages/Experience';
+import { Affiliations } from './pages/Affiliations';
 import { NotFound } from './pages/NotFound';
 
 const PAGES: Record<string, () => React.ReactElement> = {
@@ -21,6 +24,9 @@ const PAGES: Record<string, () => React.ReactElement> = {
   '/certifications': Certifications,
   '/gear': Gear,
   '/shop': Shop,
+  '/collabs': Collabs,
+  '/experience': Experience,
+  '/affiliations': Affiliations,
 };
 
 export default function App() {
