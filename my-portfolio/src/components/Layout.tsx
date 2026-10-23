@@ -185,7 +185,7 @@ export function Layout(props: Props) {
       <div className="dots dots--corner" aria-hidden="true" />
       <main id="main" className="main">
         {children}
-        {path !== '/collabs' && <Cat className="cat-floor--foot" scale={3} />}
+        <Cat className="cat-floor--foot" scale={3} />
         <footer className="foot">
           <span>
             © {new Date().getFullYear()} {PROFILE.name} · {PROFILE.location}

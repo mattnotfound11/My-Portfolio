@@ -16,7 +16,7 @@ import { Link, useTitle } from '../router';
 import { Reveal } from '../components/Reveal';
 import { Halftone } from '../components/Halftone';
 import { ProjectFan } from '../components/ProjectFan';
-import { DotCalendar } from '../components/DotCalendar';
+import { GithubActivity } from '../components/GithubActivity';
 import { CertCard } from '../components/CertCard';
 import { CertViewer } from '../components/CertViewer';
 import { GearCard } from '../components/GearCard';
@@ -249,7 +249,7 @@ export function Home() {
               @{PROFILE.githubHandle} ↗
             </a>
           </div>
-          <DotCalendar username={PROFILE.githubHandle} />
+          <GithubActivity username={PROFILE.githubHandle} />
         </Reveal>
       </section>
 

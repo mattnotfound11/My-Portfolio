@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CERT_TYPES, CERTIFICATES, LEARNING, PROFILE, type Certificate } from '../data';
+import { CERT_TOPICS, CERTIFICATES, LEARNING, PROFILE, type Certificate } from '../data';
 import { useTitle } from '../router';
 import { Reveal } from '../components/Reveal';
 import { CertCard } from '../components/CertCard';
@@ -17,17 +17,13 @@ export function Certifications() {
         fundamentals — course certifications plus one regional AI conference.
       </PageHead>
 
-      {CERT_TYPES.map((t) => {
-        const list = CERTIFICATES.filter((c) => c.type === t.type);
+      {CERT_TOPICS.map((topic) => {
+        const list = CERTIFICATES.filter((c) => c.topic === topic);
         if (!list.length) return null;
         return (
-          <Reveal key={t.type}>
+          <Reveal key={topic}>
             <section className="cert-group">
-              <div className="cert-group-head">
-                <h2 className="sec-label">{t.label}</h2>
-                <span className="cert-count">{String(list.length).padStart(2, '0')}</span>
-              </div>
-              <p className="group-note">{t.note}</p>
+              <h2 className="sec-label">{topic}</h2>
               <div className="cert-grid cert-grid--page">
                 {list.map((c, i) => (
                   <CertCard key={c.id} cert={c} index={i} onOpen={setCert} tilt />
@@ -40,22 +36,14 @@ export function Certifications() {
 
       <Reveal>
         <section className="cert-group">
-          <div className="cert-group-head">
-            <h2 className="sec-label">Currently studying</h2>
-            <span className="cert-count">{String(LEARNING.length).padStart(2, '0')}</span>
-          </div>
-          <p className="group-note">In progress right now — listed separately from what I've earned.</p>
+          <h2 className="sec-label">In progress</h2>
           <div className="cert-grid cert-grid--page">
             {LEARNING.map((l) => (
               <div key={l.id} className="cert cert--pending">
-                <span className="cert-shot cert-shot--pending">
-                  <Mark name={l.issuer} size="sm" />
-                </span>
-                <span className="cert-text">
-                  <span className="cert-name">{l.name}</span>
-                  <span className="cert-issuer">{l.issuer}</span>
-                  <span className="cert-view">Studying now</span>
-                </span>
+                <Mark name={l.issuer} logo={l.logo} size="sm" />
+                <span className="cert-name">{l.name}</span>
+                <span className="cert-issuer">{l.issuer}</span>
+                <span className="cert-view">Studying now</span>
               </div>
             ))}
           </div>

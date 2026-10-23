@@ -304,8 +304,10 @@ export type Certificate = {
   meta: string[];
   /** Badge wording. Attendance records say so plainly rather than posing as skills certs. */
   kind?: 'Verified' | 'Attended';
-  /** What sort of certificate this is, used to group the Certifications page. */
-  type: 'Program' | 'Course' | 'Event';
+  /** Topic heading on the Certifications page. */
+  topic: 'AI' | 'Engineering' | 'Design' | 'Networking & Security';
+  /** Issuer logo shown on the card. */
+  logo: string;
   /** Scan of the certificate itself, cropped free of verification codes. */
   image: string;
 };
@@ -313,7 +315,8 @@ export type Certificate = {
 export const CERTIFICATES: Certificate[] = [
   {
     id: 'aws',
-    type: 'Program',
+    topic: 'AI',
+    logo: '/assets/issuers/udacity.png',
     image: '/assets/certificates/aws-ai-ml-scholars.jpg',
     issuer: 'Udacity × AWS',
     name: 'AWS AI & ML Scholars',
@@ -329,7 +332,8 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'mcp',
-    type: 'Course',
+    topic: 'AI',
+    logo: '/assets/issuers/scrimba.png',
     image: '/assets/certificates/mcp.jpg',
     issuer: 'Scrimba',
     name: 'Intro to Model Context Protocol (MCP)',
@@ -340,7 +344,8 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'ui',
-    type: 'Course',
+    topic: 'Design',
+    logo: '/assets/issuers/scrimba.png',
     image: '/assets/certificates/ui-design.jpg',
     issuer: 'Scrimba',
     name: 'Intro to UI Design Fundamentals',
@@ -351,7 +356,8 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'git',
-    type: 'Course',
+    topic: 'Engineering',
+    logo: '/assets/issuers/scrimba.png',
     image: '/assets/certificates/git-github.jpg',
     issuer: 'Scrimba',
     name: 'Learn Git and GitHub',
@@ -362,7 +368,8 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'css-vars',
-    type: 'Course',
+    topic: 'Engineering',
+    logo: '/assets/issuers/scrimba.png',
     image: '/assets/certificates/css-variables.jpg',
     issuer: 'Scrimba',
     name: 'Learn CSS Variables',
@@ -373,7 +380,8 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'packet-tracer',
-    type: 'Course',
+    topic: 'Networking & Security',
+    logo: '/assets/issuers/cisco.png',
     image: '/assets/certificates/packet-tracer.jpg',
     issuer: 'Cisco Networking Academy',
     name: 'Getting Started with Cisco Packet Tracer',
@@ -384,7 +392,8 @@ export const CERTIFICATES: Certificate[] = [
   },
   {
     id: 'ai-fest',
-    type: 'Event',
+    topic: 'AI',
+    logo: '/assets/issuers/ai-fest.png',
     image: '/assets/certificates/ai-fest.jpg',
     issuer: '2026 AI Fest · DOST VI',
     name: 'AI GAME ON! — 2026 AI Fest',
@@ -403,18 +412,21 @@ export type Learning = {
   issuer: string;
   name: string;
   note: string;
+  logo: string;
 };
 
 /** In progress — deliberately NOT listed among earned credentials. */
 export const LEARNING: Learning[] = [
   {
     id: 'cisco-cyber',
+    logo: '/assets/issuers/cisco.png',
     issuer: 'Cisco Networking Academy',
     name: 'Introduction to Cybersecurity',
     note: 'Threat landscape, attack types, and the principles behind defending networks and data.',
   },
   {
     id: 'htb',
+    logo: '/assets/issuers/htb.png',
     issuer: 'Hack The Box',
     name: 'HTB Academy — Intro',
     note: 'Hands-on offensive security fundamentals: reconnaissance, common vulnerabilities, and how attackers actually think.',
@@ -473,7 +485,7 @@ export const GEAR: Gear[] = [
     id: 'macbook-pro',
     name: 'MacBook Pro',
     spec: 'M5 · 16GB memory · 1TB · 14-inch',
-    image: '/assets/gear/macbook-pro.png',
+    image: '/assets/gear/macbook-pro.jpg',
   },
   {
     id: 'iphone-17-pro-max',
@@ -513,7 +525,7 @@ export const PRODUCTS: Product[] = [
       'A card that opens a link when someone taps it with their phone. Point it at your contact details, portfolio, socials, or menu.',
     points: ['Tap to open, no app needed on most modern phones', 'Programmed with the link you choose'],
     status: 'Coming soon',
-    image: '/assets/shop/nfc-card.jpg',
+    image: '/assets/shop/nfc-card.svg',
   },
   {
     id: 'nfc-google-review',
@@ -523,15 +535,11 @@ export const PRODUCTS: Product[] = [
       'Customers tap their phone on the card and land straight on your Google review page, so leaving a review takes seconds.',
     points: ['Opens your Google review page on tap', 'Set up for your business listing'],
     status: 'Coming soon',
-    image: '/assets/shop/nfc-google-review.jpg',
+    image: '/assets/shop/nfc-google-review.svg',
   },
 ];
 
-export const CERT_TYPES: { type: Certificate['type']; label: string; note: string }[] = [
-  { type: 'Program', label: 'Program & scholarship', note: 'Multi-part programs with hands-on builds.' },
-  { type: 'Course', label: 'Course completion', note: 'Self-paced courses, grouped by issuer.' },
-  { type: 'Event', label: 'Event attendance', note: 'Conferences and events I attended.' },
-];
+export const CERT_TOPICS: Certificate['topic'][] = ['AI', 'Engineering', 'Design', 'Networking & Security'];
 
 /* ── Experience ────────────────────────────────────────── */
 

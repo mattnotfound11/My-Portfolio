@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { Link } from '../router';
-import { Reveal } from './Reveal';
+import { Link } from '../../router';
+import { Reveal } from '../Reveal';
 
 /** "01 — projects" header with an optional "all projects →" link. */
 export function SectionHead({ n, title, to, more }: { n: string; title: string; to?: string; more?: string }) {

@@ -1,0 +1,460 @@
+/*
+ * Activity heatmap. The design tokens from the component spec live on
+ * .root rather than :root, so they can't collide with the site's own
+ * --surface and friends. Dark mode follows the site's theme switch.
+ */
+
+.root {
+  --accent: oklch(33% 0 0);
+  --surface: oklch(100% 0 0);
+  --text-primary: oklch(20% 0 0);
+  --text-secondary: oklch(46% 0 0);
+  --text-muted: oklch(59% 0 0);
+  --border-strong: oklch(82% 0 0);
+  --focus-ring: transparent;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --leading-body: 1.4;
+  --radius-control: 1.125rem;
+  --shadow-raised: 0 6px 18px oklch(0% 0 0 / 0.065), 0 1px 3px oklch(0% 0 0 / 0.035);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: linear(0, 0.0258, 0.09, 0.1763, 0.2732, 0.3724, 0.4683, 0.5573, 0.6376, 0.7082, 0.7689, 0.8202, 0.8628, 0.8976, 0.9256, 0.9476, 0.9648, 0.9778, 0.9875, 0.9945, 0.9994, 1.0026, 1.0047, 1.0058, 1.0062, 1.0062, 1.0059, 1.0055, 1.0049, 1.0043, 1.0036, 1.0031, 1.0025, 1.002, 1.0016, 1.0013, 1);
+  --duration-fast: 160ms;
+  --duration-spring: 580ms;
+
+  /* Four accent tints over an empty square. */
+  --level-0: oklch(94.5% 0 0);
+  --level-1: color-mix(in oklch, var(--accent) 26%, var(--level-0));
+  --level-2: color-mix(in oklch, var(--accent) 50%, var(--level-0));
+  --level-3: color-mix(in oklch, var(--accent) 74%, var(--level-0));
+  --level-4: var(--accent);
+  --cell-hover: oklch(0% 0 0 / 0.35);
+
+  position: relative;
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  color: var(--text-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme='light'])) .root {
+    --accent: oklch(90% 0 0);
+    --surface: oklch(17% 0 0);
+    --text-primary: oklch(94% 0 0);
+    --text-secondary: oklch(72% 0 0);
+    --text-muted: oklch(56% 0 0);
+    --border-strong: oklch(32% 0 0);
+    --shadow-raised: 0 6px 18px oklch(0% 0 0 / 0.5), 0 1px 3px oklch(0% 0 0 / 0.4);
+    --level-0: oklch(22% 0 0);
+    --cell-hover: oklch(100% 0 0 / 0.4);
+  }
+}
+
+:global(:root[data-theme='dark']) .root {
+  --accent: oklch(90% 0 0);
+  --surface: oklch(17% 0 0);
+  --text-primary: oklch(94% 0 0);
+  --text-secondary: oklch(72% 0 0);
+  --text-muted: oklch(56% 0 0);
+  --border-strong: oklch(32% 0 0);
+  --shadow-raised: 0 6px 18px oklch(0% 0 0 / 0.5), 0 1px 3px oklch(0% 0 0 / 0.4);
+  --level-0: oklch(22% 0 0);
+  --cell-hover: oklch(100% 0 0 / 0.4);
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.summary {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.total {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.period {
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Grid ───────────────────────────────────────────────── */
+
+.scroller {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  /* Room for the hover shadow and focus outline on the edge cells. */
+  padding: 3px 2px 2px;
+  margin: -3px -2px -2px;
+}
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.canvas {
+  --gap: 3px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  row-gap: 6px;
+  /* Cells never shrink below ~10px; narrower screens scroll instead. */
+  min-width: calc(var(--weeks) * 12px + 36px);
+}
+
+.months {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  height: 1.2em;
+  container-type: inline-size;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.month {
+  --cw: calc((100cqw - (var(--weeks) - 1) * var(--gap)) / var(--weeks));
+  position: absolute;
+  top: 0;
+  left: calc(var(--col) * (var(--cw) + var(--gap)));
+  white-space: nowrap;
+}
+
+.weekdays {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: repeat(7, minmax(0, 1fr));
+  row-gap: var(--gap);
+}
+
+.weekday {
+  align-self: center;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.plot {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  container-type: inline-size;
+}
+
+.grid {
+  display: grid;
+  row-gap: var(--gap);
+  outline: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--weeks), minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+.cell {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 2.5px;
+  background-color: var(--level-0);
+}
+.cell[data-empty] {
+  background-color: transparent;
+}
+.cell[data-level='1'] {
+  background-color: var(--level-1);
+}
+.cell[data-level='2'] {
+  background-color: var(--level-2);
+}
+.cell[data-level='3'] {
+  background-color: var(--level-3);
+}
+.cell[data-level='4'] {
+  background-color: var(--level-4);
+}
+.cell[data-index] {
+  cursor: pointer;
+}
+.cell[data-index]:hover {
+  box-shadow: inset 0 0 0 1px var(--cell-hover);
+}
+.cell[data-index]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Reveal: a diagonal wave, once, the first time the grid is on screen. */
+.grid[data-reveal='hidden'] .cell {
+  opacity: 0;
+  transform: scale(0.4);
+}
+.grid[data-reveal='revealing'] .cell {
+  transition:
+    opacity 380ms var(--ease-enter) var(--wave),
+    transform var(--duration-spring) var(--ease-spring) var(--wave);
+}
+/* After that, a new range recolours in a sweep while hover and highlight stay instant. */
+.grid[data-reveal='done'] .cell {
+  transition:
+    background-color 320ms var(--ease-standard) var(--wave),
+    opacity var(--duration-fast) var(--ease-standard),
+    box-shadow 120ms var(--ease-standard);
+}
+.grid[data-reveal='done'][data-direction='back'] .cell {
+  transition-delay: var(--wave-back), 0ms, 0ms;
+}
+
+/* Legend preview: everything but the chosen level steps back. */
+.grid[data-highlight='0'] .cell[data-index]:not([data-level='0']),
+.grid[data-highlight='1'] .cell[data-index]:not([data-level='1']),
+.grid[data-highlight='2'] .cell[data-index]:not([data-level='2']),
+.grid[data-highlight='3'] .cell[data-index]:not([data-level='3']),
+.grid[data-highlight='4'] .cell[data-index]:not([data-level='4']) {
+  opacity: 0.16;
+}
+
+/* Selection ring, gliding between cells. */
+.ring {
+  --cw: calc((100cqw - (var(--weeks) - 1) * var(--gap)) / var(--weeks));
+  position: absolute;
+  left: calc(var(--col) * (var(--cw) + var(--gap)));
+  top: calc(var(--row) * (var(--cw) + var(--gap)));
+  width: var(--cw);
+  height: var(--cw);
+  border-radius: 3px;
+  box-shadow:
+    0 0 0 1.5px var(--surface),
+    0 0 0 3px var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  transition-property: left, top, opacity;
+  transition-duration: var(--duration-spring), var(--duration-spring), var(--duration-fast);
+  transition-timing-function: var(--ease-spring), var(--ease-spring), var(--ease-standard);
+}
+.ring[data-shown] {
+  opacity: 1;
+}
+
+/* ── Legend ─────────────────────────────────────────────── */
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 22px;
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.caption {
+  position: relative;
+  min-width: 0;
+  color: var(--text-secondary);
+}
+.captionShort {
+  display: none;
+}
+
+.scale {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.legendText {
+  color: var(--text-muted);
+}
+
+.swatches {
+  display: flex;
+  gap: 3px;
+}
+
+.swatch {
+  width: 11px;
+  height: 11px;
+  padding: 0;
+  border: 0;
+  border-radius: 2.5px;
+  background-color: var(--level-0);
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-fast) var(--ease-standard);
+}
+.swatch[data-level='1'] {
+  background-color: var(--level-1);
+}
+.swatch[data-level='2'] {
+  background-color: var(--level-2);
+}
+.swatch[data-level='3'] {
+  background-color: var(--level-3);
+}
+.swatch[data-level='4'] {
+  background-color: var(--level-4);
+}
+.swatch:hover {
+  transform: scale(1.18);
+}
+.swatch[aria-pressed='true'] {
+  box-shadow:
+    0 0 0 1.5px var(--surface),
+    0 0 0 3px var(--accent);
+}
+.swatch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Tooltip ────────────────────────────────────────────── */
+
+.tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  left: 0;
+  bottom: 7px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  box-shadow: var(--shadow-raised);
+  transform-origin: 50% 100%;
+  white-space: nowrap;
+}
+
+.tipBody {
+  position: relative;
+  display: block;
+  height: calc(var(--text-xs) * var(--leading-body));
+  overflow: hidden;
+  font-size: var(--text-xs);
+  line-height: var(--leading-body);
+}
+
+.tipMeasure,
+.tipLines {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.tipMeasure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Measured for the bubble's width, so it must never wrap to the current one. */
+  width: max-content;
+  visibility: hidden;
+}
+
+.tipLines {
+  position: relative;
+}
+
+.tipPrimary {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.tipSecondary {
+  color: var(--text-muted);
+}
+
+/* ── Rolling number & rising text ───────────────────────── */
+
+.rollingFrame {
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: bottom;
+  justify-content: flex-end;
+}
+
+.rolling {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.place {
+  position: relative;
+  display: inline-block;
+}
+
+.placeChar {
+  display: inline-block;
+}
+
+.rise {
+  position: relative;
+  display: inline-flex;
+  vertical-align: bottom;
+}
+
+.riseLine {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* ── Utilities ──────────────────────────────────────────── */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 480px) {
+  .captionLong {
+    display: none;
+  }
+  .captionShort {
+    display: inline;
+  }
+}

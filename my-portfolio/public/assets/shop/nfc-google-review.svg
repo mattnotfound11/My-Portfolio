@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="NFC Google review card: we would appreciate your Google review, tap your phone">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2236b8"/>
+      <stop offset="1" stop-color="#1a2a9c"/>
+    </linearGradient>
+    <filter id="lift" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity="0.10"/>
+    </filter>
+    <filter id="floor" x="-50%" y="-200%" width="200%" height="500%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <clipPath id="card"><rect x="150" y="140" width="700" height="720" rx="46"/></clipPath>
+    <path id="arc" d="M 330 600 Q 500 540 670 600"/>
+    <path id="star" d="M0 -26 L7.6 -8.1 L26.7 -8.1 L11.6 3.4 L16.6 22 L0 11 L-16.6 22 L-11.6 3.4 L-26.7 -8.1 L-7.6 -8.1 Z"/>
+  </defs>
+
+  <rect width="1000" height="1000" fill="#f4f4f6"/>
+  <ellipse cx="500" cy="925" rx="300" ry="20" fill="#000" opacity="0.10" filter="url(#floor)"/>
+
+  <g filter="url(#lift)">
+    <rect x="150" y="140" width="700" height="720" rx="46" fill="#fafafa"/>
+    <g clip-path="url(#card)">
+      <path d="M150 140 H850 V420 C 760 380, 650 360, 560 400 C 470 440, 330 470, 150 410 Z" fill="url(#blue)"/>
+    </g>
+    <rect x="150" y="140" width="700" height="720" rx="46" fill="none" stroke="#e6e7ea" stroke-width="2"/>
+  </g>
+
+  <!-- five stars -->
+  <g fill="#f8c22e">
+    <use href="#star" x="380" y="200"/>
+    <use href="#star" x="440" y="200"/>
+    <use href="#star" x="500" y="200"/>
+    <use href="#star" x="560" y="200"/>
+    <use href="#star" x="620" y="200"/>
+  </g>
+
+  <g font-family="Helvetica Neue, Arial, sans-serif" fill="#ffffff" text-anchor="middle">
+    <text x="500" y="290" font-size="38" letter-spacing="0.5">WE WOULD <tspan font-weight="700">APPRECIATE</tspan></text>
+    <text x="500" y="340" font-size="38" letter-spacing="0.5">YOUR <tspan font-weight="700">GOOGLE REVIEW</tspan></text>
+  </g>
+
+  <!-- Google G on its medallion -->
+  <circle cx="500" cy="430" r="74" fill="#ffffff" stroke="#e8e8ec" stroke-width="3"/>
+  <g transform="translate(452 382) scale(2)">
+    <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+    <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+    <path fill="#FBBC05" d="M11.69 28.18C11.25 26.86 11 25.45 11 24s.25-2.86.69-4.18v-5.7H4.34C2.85 17.09 2 20.45 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/>
+    <path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/>
+  </g>
+
+  <text font-family="Helvetica Neue, Arial, sans-serif" font-size="30" font-weight="700" fill="#1b1b1f" letter-spacing="1.5">
+    <textPath href="#arc" startOffset="50%" text-anchor="middle">TAP YOUR PHONE</textPath>
+  </text>
+
+  <!-- tap target with NFC waves, and a hand holding a phone -->
+  <g fill="none" stroke="#1b1b1f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="455" cy="700" rx="92" ry="68"/>
+    <path d="M440 676 q14 24 0 48"/>
+    <path d="M458 664 q22 36 0 72"/>
+    <path d="M476 652 q30 48 0 96"/>
+    <rect x="520" y="625" width="62" height="118" rx="12" fill="#ffffff"/>
+    <path d="M540 637 h22"/>
+    <path d="M520 690 c -14 -2 -22 10 -16 20 l 10 14 c -10 4 -10 18 2 20 l 6 0"/>
+    <path d="M582 700 c 18 10 30 30 36 52 l -28 34 c -16 -12 -30 -22 -44 -40"/>
+  </g>
+  <text x="551" y="672" font-family="Helvetica Neue, Arial, sans-serif" font-size="17" font-weight="700" fill="#1b1b1f" text-anchor="middle">NFC</text>
+</svg>
