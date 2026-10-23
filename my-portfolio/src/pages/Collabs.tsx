@@ -163,7 +163,7 @@ export function Collabs() {
   useTitle(`Collabs — ${PROFILE.name}`);
 
   return (
-    <div className="page page--wide">
+    <div className="page page--wide page--center">
       <PageHead title="collabs">
         As a student developer, I build with organizations, teams, and local businesses on websites, interfaces, and
         events. A few I’ve worked with:

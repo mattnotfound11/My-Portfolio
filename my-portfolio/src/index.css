@@ -2254,6 +2254,16 @@ button.cert:hover .cert-view {
 
 /* ── Collabs ────────────────────────────────────────────── */
 
+.page--center .page-head {
+  text-align: center;
+}
+.page--center .page-lede {
+  margin: 0 auto;
+}
+.page--center .partners {
+  justify-content: center;
+}
+
 .partners {
   display: flex;
   flex-wrap: wrap;
