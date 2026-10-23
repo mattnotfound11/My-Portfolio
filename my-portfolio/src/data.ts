@@ -5,6 +5,7 @@
 
 export const PROFILE = {
   name: 'Matthew Tabat',
+  fullName: 'Matthew P. Tabat',
   first: 'Matthew',
   last: 'Tabat',
   role: 'Software Developer & Security Analyst',
@@ -417,25 +418,71 @@ export const EDUCATION: Milestone[] = [
   },
 ];
 
-/* ── Nav ───────────────────────────────────────────────── */
+/* ── Gear ──────────────────────────────────────────────── */
 
-export const NAV = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'stack', label: 'Stack' },
-  { id: 'work', label: 'Work' },
-  { id: 'credentials', label: 'Credentials' },
-  { id: 'contact', label: 'Contact' },
+export type Gear = {
+  id: string;
+  name: string;
+  spec: string;
+  /** Product photo; the card falls back to a plain plate if the file is missing. */
+  image: string;
+};
+
+export const GEAR: Gear[] = [
+  {
+    id: 'macbook-pro',
+    name: 'MacBook Pro',
+    spec: 'M5 · 16GB memory · 1TB · 14-inch',
+    image: '/assets/gear/macbook-pro.png',
+  },
+  {
+    id: 'iphone-17-pro-max',
+    name: 'iPhone 17 Pro Max',
+    spec: 'A19 Pro chip · 512GB',
+    image: '/assets/gear/iphone-17-pro-max.jpg',
+  },
+];
+
+/* ── Highlights (home page strip) ──────────────────────── */
+
+export const HIGHLIGHTS = [
+  { title: 'AWS AI & ML', sub: 'Scholar · 2026', mark: 'cloud' },
+  { title: 'PHARMATRACK', sub: 'UI/UX Design', mark: 'qr' },
+  { title: 'San Agustin', sub: 'BSIT · 3rd Year', mark: 'school' },
 ] as const;
 
-export const MARQUEE = [
-  'Software Developer',
-  'Security Analyst',
-  'React & Next.js',
-  'Full Stack',
-  'BSIT Student',
-  'Iloilo City, PH',
-  'AWS AI & ML Scholar',
-  'Supabase',
-  'Open to Internships',
+/* ── Shop ──────────────────────────────────────────────── */
+
+export type Product = {
+  id: string;
+  name: string;
+  kind: string;
+  blurb: string;
+  points: string[];
+  status: 'Coming soon' | 'Available';
+  /** Product photo; the card falls back to a plain plate if the file is missing. */
+  image: string;
+};
+
+export const PRODUCTS: Product[] = [
+  {
+    id: 'nfc-card',
+    name: 'NFC Card',
+    kind: 'Tap-to-share card',
+    blurb:
+      'A card that opens a link when someone taps it with their phone. Point it at your contact details, portfolio, socials, or menu.',
+    points: ['Tap to open, no app needed on most modern phones', 'Programmed with the link you choose'],
+    status: 'Coming soon',
+    image: '/assets/shop/nfc-card.jpg',
+  },
+  {
+    id: 'nfc-google-review',
+    name: 'NFC Google Review Card',
+    kind: 'For businesses',
+    blurb:
+      'Customers tap their phone on the card and land straight on your Google review page, so leaving a review takes seconds.',
+    points: ['Opens your Google review page on tap', 'Set up for your business listing'],
+    status: 'Coming soon',
+    image: '/assets/shop/nfc-google-review.jpg',
+  },
 ];

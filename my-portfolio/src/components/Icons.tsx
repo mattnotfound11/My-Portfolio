@@ -164,3 +164,80 @@ export const IconClose = (p: P) => (
     <path d="M6 6l12 12M18 6 6 18" />
   </svg>
 );
+
+export const IconSmartphone = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="6.5" y="2.5" width="11" height="19" rx="2.5" />
+    <path d="M10.5 5.5h3" />
+  </svg>
+);
+
+export const IconBag = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M5 8h14l-1 12.5H6Z" />
+    <path d="M9 10V6.5a3 3 0 0 1 6 0V10" />
+  </svg>
+);
+
+export const IconFile = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" />
+    <path d="M14 3v5h5" />
+    <path d="M9 13h6M9 17h4" />
+  </svg>
+);
+
+export const IconLaptop = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="4" y="5" width="16" height="11" rx="1.5" />
+    <path d="M2.5 19h19" />
+  </svg>
+);
+
+export const IconSearch = (p: P) => (
+  <svg {...base} {...p}>
+    <circle cx="11" cy="11" r="6.5" />
+    <path d="m20 20-4.2-4.2" />
+  </svg>
+);
+
+export const IconSun = (p: P) => (
+  <svg {...base} {...p}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" />
+  </svg>
+);
+
+export const IconMoon = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" />
+  </svg>
+);
+
+export const IconMonitor = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="3" y="4" width="18" height="12" rx="1.5" />
+    <path d="M8 20h8M12 16v4" />
+  </svg>
+);
+
+export const IconCopy = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="8.5" y="8.5" width="12" height="12" rx="2" />
+    <path d="M15.5 8.5V5.5a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3" />
+  </svg>
+);
+
+export const IconDownload = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M12 4v11M7 10.5l5 5 5-5" />
+    <path d="M4.5 19.5h15" />
+  </svg>
+);
+
+export const IconBook = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5Z" />
+    <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5Z" />
+  </svg>
+);
