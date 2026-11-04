@@ -37,12 +37,19 @@ export function CertViewer({ cert, onClose }: { cert: Certificate | null; onClos
         </button>
         <img src={cert.image} alt={`${cert.name} certificate issued by ${cert.issuer}`} className="viewer-img" />
         <div className="viewer-body">
-          <p className="viewer-issuer">
-            {cert.issuer} · {cert.year}
-          </p>
-          <h2 id="viewer-title" className="viewer-title">
-            {cert.name}
-          </h2>
+          <div className="viewer-head">
+            <div>
+              <p className="viewer-issuer">
+                {cert.issuer} · {cert.year}
+              </p>
+              <h2 id="viewer-title" className="viewer-title">
+                {cert.name}
+              </h2>
+            </div>
+            {cert.badge && (
+              <img src={cert.badge} alt={`${cert.name} digital badge`} className="viewer-badge" width={72} height={72} />
+            )}
+          </div>
           <p className="viewer-text">{cert.description}</p>
           <div className="chips">
             {cert.kind === 'Attended' && <Chip>Attended</Chip>}

@@ -1712,6 +1712,18 @@ button.cert:hover .cert-view {
 .viewer-body {
   padding: 22px 24px 24px;
 }
+.viewer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.viewer-badge {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+}
 .viewer-issuer {
   font: 400 10.5px var(--mono);
   letter-spacing: 0.12em;

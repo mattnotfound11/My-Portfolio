@@ -310,6 +310,8 @@ export type Certificate = {
   logo: string;
   /** Scan of the certificate itself, cropped free of verification codes. */
   image: string;
+  /** Digital badge issued with the certificate, shown in the viewer. */
+  badge?: string;
 };
 
 export const CERTIFICATES: Certificate[] = [
@@ -391,6 +393,19 @@ export const CERTIFICATES: Certificate[] = [
     meta: ['Completed 08 Aug 2026'],
   },
   {
+    id: 'intro-cybersecurity',
+    topic: 'Networking & Security',
+    logo: '/assets/issuers/cisco.png',
+    image: '/assets/certificates/intro-cybersecurity.jpg',
+    badge: '/assets/badges/intro-cybersecurity.png',
+    issuer: 'Cisco Networking Academy',
+    name: 'Introduction to Cybersecurity',
+    year: '2026',
+    description:
+      'Student-level credential covering the threat landscape — common cyber threats, attacks, and vulnerabilities, how individuals stay safe online, and how organizations protect their operations.',
+    meta: ['Verified badge', 'Completed 04 Nov 2026'],
+  },
+  {
     id: 'ai-fest',
     topic: 'AI',
     logo: '/assets/issuers/ai-fest.png',
@@ -417,13 +432,6 @@ export type Learning = {
 
 /** In progress — deliberately NOT listed among earned credentials. */
 export const LEARNING: Learning[] = [
-  {
-    id: 'cisco-cyber',
-    logo: '/assets/issuers/cisco.png',
-    issuer: 'Cisco Networking Academy',
-    name: 'Introduction to Cybersecurity',
-    note: 'Threat landscape, attack types, and the principles behind defending networks and data.',
-  },
   {
     id: 'htb',
     logo: '/assets/issuers/htb.png',
