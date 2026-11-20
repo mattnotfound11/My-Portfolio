@@ -46,9 +46,26 @@ export function CertViewer({ cert, onClose }: { cert: Certificate | null; onClos
                 {cert.name}
               </h2>
             </div>
-            {cert.badge && (
-              <img src={cert.badge} alt={`${cert.name} digital badge`} className="viewer-badge" width={72} height={72} />
-            )}
+            {cert.badge &&
+              (cert.badgeUrl ? (
+                <a
+                  href={cert.badgeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="viewer-badge-link"
+                  title="Verify on Credly"
+                >
+                  <img
+                    src={cert.badge}
+                    alt={`${cert.name} digital badge, verify on Credly (opens in a new tab)`}
+                    className="viewer-badge"
+                    width={72}
+                    height={72}
+                  />
+                </a>
+              ) : (
+                <img src={cert.badge} alt={`${cert.name} digital badge`} className="viewer-badge" width={72} height={72} />
+              ))}
           </div>
           <p className="viewer-text">{cert.description}</p>
           <div className="chips">

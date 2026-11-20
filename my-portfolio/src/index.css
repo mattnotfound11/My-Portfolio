@@ -1724,6 +1724,20 @@ button.cert:hover .cert-view {
   height: 72px;
   border-radius: 12px;
 }
+.viewer-badge-link {
+  flex: none;
+  display: block;
+  border-radius: 12px;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.viewer-badge-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.35);
+}
+.viewer-badge-link:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
 .viewer-issuer {
   font: 400 10.5px var(--mono);
   letter-spacing: 0.12em;

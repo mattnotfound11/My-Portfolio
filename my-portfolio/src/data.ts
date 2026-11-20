@@ -312,6 +312,8 @@ export type Certificate = {
   image: string;
   /** Digital badge issued with the certificate, shown in the viewer. */
   badge?: string;
+  /** Public verification page the badge links to. */
+  badgeUrl?: string;
 };
 
 export const CERTIFICATES: Certificate[] = [
@@ -398,6 +400,7 @@ export const CERTIFICATES: Certificate[] = [
     logo: '/assets/issuers/cisco.png',
     image: '/assets/certificates/intro-cybersecurity.jpg',
     badge: '/assets/badges/intro-cybersecurity.png',
+    badgeUrl: 'https://www.credly.com/badges/ebb3c36a-bd2b-42d5-aeab-b29829f747ed',
     issuer: 'Cisco Networking Academy',
     name: 'Introduction to Cybersecurity',
     year: '2026',
