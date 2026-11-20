@@ -1,17 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { PROFILE } from '../data';
+import { SEEN_KEY } from '../loader-state';
 
-const SEEN_KEY = 'mt-loader-seen';
 const MIN_MS = 1200;
 const MAX_MS = 4000;
-
-export function loaderAlreadySeen() {
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
 
 function manilaTime() {
   return new Intl.DateTimeFormat('en-PH', {

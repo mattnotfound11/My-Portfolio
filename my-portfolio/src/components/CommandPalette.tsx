@@ -26,6 +26,7 @@ export function CommandPalette({ open, onClose, setTheme }: Props) {
       { id: 'affiliations', group: 'Pages', label: 'Affiliations', run: () => navigate('/affiliations') },
       { id: 'projects', group: 'Pages', label: 'Projects', run: () => navigate('/projects') },
       { id: 'stack', group: 'Pages', label: 'Tech stack', run: () => navigate('/stack') },
+      { id: 'multimedia', group: 'Pages', label: 'Multimedia', run: () => navigate('/multimedia') },
       { id: 'certs', group: 'Pages', label: 'Certifications', run: () => navigate('/certifications') },
       { id: 'gear', group: 'Pages', label: 'Gear', run: () => navigate('/gear') },
       { id: 'shop', group: 'Pages', label: 'Shop — NFC cards', run: () => navigate('/shop') },

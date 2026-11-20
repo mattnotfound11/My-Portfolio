@@ -1,5 +1,6 @@
 import { useEffect, useState, type ComponentType, type ReactNode, type SVGProps } from 'react';
-import { Link, usePath } from '../router';
+import { usePath } from '../router';
+import { Link } from './Link';
 import { PROFILE } from '../data';
 import { Ducks } from './Ducks';
 import type { ThemeChoice } from '../theme';
@@ -33,6 +34,7 @@ const GROUPS: NavItem[][] = [
     { to: '/stack', label: 'Stack' },
     { to: '/certifications', label: 'Certifications' },
     { to: '/affiliations', label: 'Affiliations' },
+    { to: '/multimedia', label: 'Multimedia' },
   ],
   [
     { to: PROFILE.github, label: 'GitHub', icon: IconGithub, external: true },
