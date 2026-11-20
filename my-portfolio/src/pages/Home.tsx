@@ -12,7 +12,8 @@ import {
   type Certificate,
 } from '../data';
 import { WORK } from '../work';
-import { Link, useTitle } from '../router';
+import { useTitle } from '../router';
+import { Link } from '../components/Link';
 import { Reveal } from '../components/Reveal';
 import { Halftone } from '../components/Halftone';
 import { ProjectFan } from '../components/ProjectFan';

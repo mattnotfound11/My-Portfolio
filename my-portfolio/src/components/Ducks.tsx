@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { DUCK, HEART, Pixels } from './Pixel';
+import { Pixels } from './Pixel';
+import { DUCK, HEART } from './pixel-art';
 
 const SAYS = ['quack!', 'quack quack', 'qwak?', 'honk', '*waddle*'];
 

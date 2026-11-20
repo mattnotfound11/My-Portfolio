@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Link } from '../../router';
+import { Link } from '../Link';
 import { Reveal } from '../Reveal';
 
 /** "01 — projects" header with an optional "all projects →" link. */

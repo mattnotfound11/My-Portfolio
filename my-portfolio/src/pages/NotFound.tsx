@@ -1,5 +1,6 @@
 import { PROFILE } from '../data';
-import { Link, useTitle } from '../router';
+import { useTitle } from '../router';
+import { Link } from '../components/Link';
 
 export function NotFound() {
   useTitle(`Not found — ${PROFILE.name}`);

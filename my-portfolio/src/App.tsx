@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { usePath } from './router';
 import { useTheme } from './theme';
 import { Layout } from './components/Layout';
-import { Loader, loaderAlreadySeen } from './components/Loader';
+import { Loader } from './components/Loader';
+import { loaderAlreadySeen } from './loader-state';
 import { CommandPalette } from './components/CommandPalette';
 import { Home } from './pages/Home';
 import { Projects } from './pages/Projects';
@@ -13,6 +14,7 @@ import { Gear } from './pages/Gear';
 import { Shop } from './pages/Shop';
 import { Collabs } from './pages/Collabs';
 import { Experience } from './pages/Experience';
+import { Multimedia } from './pages/Multimedia';
 import { Affiliations } from './pages/Affiliations';
 import { NotFound } from './pages/NotFound';
 
@@ -27,6 +29,7 @@ const PAGES: Record<string, () => React.ReactElement> = {
   '/collabs': Collabs,
   '/experience': Experience,
   '/affiliations': Affiliations,
+  '/multimedia': Multimedia,
 };
 
 export default function App() {

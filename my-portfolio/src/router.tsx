@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useSyncExternalStore,
-  type AnchorHTMLAttributes,
-  type MouseEvent,
-} from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 
 /**
  * A deliberately small History API router. The site has a handful of flat
@@ -39,21 +34,6 @@ export function navigate(to: string) {
   window.history.pushState(null, '', to);
   window.scrollTo(0, 0);
   listeners.forEach((fn) => fn());
-}
-
-type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { to: string };
-
-export function Link({ to, onClick, ...rest }: LinkProps) {
-  const handle = (e: MouseEvent<HTMLAnchorElement>) => {
-    onClick?.(e);
-    // Let the browser handle new-tab and modified clicks.
-    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
-      return;
-    }
-    e.preventDefault();
-    navigate(to);
-  };
-  return <a href={to} onClick={handle} {...rest} />;
 }
 
 /** Keeps the tab title in step with the current page. */
