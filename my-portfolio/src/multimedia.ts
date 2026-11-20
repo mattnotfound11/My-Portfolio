@@ -23,8 +23,7 @@ export type Lab = {
 
 export const SLIDE: { title: string; image?: string; href: string; note: string } = {
   title: 'UniLend: project presentation',
-  /* Export slide 1 from Canva as PNG to public/assets/multimedia/slide-1.png, then set:
-     image: '/assets/multimedia/slide-1.png', */
+  image: '/assets/multimedia/unilend-slide-1.jpg',
   href: 'https://canva.link/8vgwh2p7ltj09vy',
   note: 'Canva slide deck. Click to open the full presentation.',
 };
