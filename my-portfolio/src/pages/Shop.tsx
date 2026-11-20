@@ -5,6 +5,8 @@ import { Reveal } from '../components/Reveal';
 import { PageHead } from '../components/ui';
 import { IconCheck, IconMail } from '../components/Icons';
 
+const peso = new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', maximumFractionDigits: 0 });
+
 function notifyLink(p: Product) {
   const subject = encodeURIComponent(`${p.name} — notify me`);
   const body = encodeURIComponent(`Hi Matthew,\n\nI'm interested in the ${p.name}. Let me know when it's available.\n\n`);
@@ -37,6 +39,7 @@ function ProductCard({ p }: { p: Product }) {
       <div className="product-body">
         <p className="product-kind">{p.kind}</p>
         <h2 className="product-name">{p.name}</h2>
+        <p className="product-price">{peso.format(p.price)}</p>
         <p className="product-blurb">{p.blurb}</p>
         <ul className="product-points">
           {p.points.map((pt) => (

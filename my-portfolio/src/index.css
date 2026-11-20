@@ -1136,7 +1136,12 @@ button.cert:hover .cert-view {
 .product-name {
   font: 400 19px/1.25 var(--pixel);
   color: var(--fg);
-  margin: 6px 0 10px;
+  margin: 6px 0 4px;
+}
+.product-price {
+  font: 500 15px var(--mono);
+  color: var(--fg);
+  margin-bottom: 10px;
 }
 .product-blurb {
   font-size: 14px;

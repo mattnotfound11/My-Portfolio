@@ -523,6 +523,8 @@ export type Product = {
   blurb: string;
   points: string[];
   status: 'Coming soon' | 'Available';
+  /** Price in Philippine pesos. */
+  price: number;
   /** Product photo; the card falls back to a plain plate if the file is missing. */
   image: string;
 };
@@ -535,6 +537,7 @@ export const PRODUCTS: Product[] = [
     blurb:
       'A card that opens a link when someone taps it with their phone. Point it at your contact details, portfolio, socials, or menu.',
     points: ['Tap to open, no app needed on most modern phones', 'Programmed with the link you choose'],
+    price: 500,
     status: 'Coming soon',
     image: '/assets/shop/nfc-card.svg',
   },
@@ -545,6 +548,7 @@ export const PRODUCTS: Product[] = [
     blurb:
       'Customers tap their phone on the card and land straight on your Google review page, so leaving a review takes seconds.',
     points: ['Opens your Google review page on tap', 'Set up for your business listing'],
+    price: 1000,
     status: 'Coming soon',
     image: '/assets/shop/nfc-google-review.svg',
   },
