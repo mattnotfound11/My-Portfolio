@@ -1223,8 +1223,18 @@ button.cert:hover .cert-view {
 }
 .pgrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .pgrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .pgrid {
+    grid-template-columns: 1fr;
+  }
 }
 .pcard {
   display: flex;
